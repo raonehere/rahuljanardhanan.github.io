@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.projectkriya.glyphlab",
+      "sha256_cert_fingerprints": [
+        "98:34:B4:BD:2A:B2:2B:1C:5E:13:5C:A2:7F:BC:0B:1C:86:88:C5:57:6F:72:8D:25:03:C3:8E:64:AB:81:E6:4A"
+      ]
+    }
+  }
+]
