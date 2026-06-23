@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glyph Walkie Connection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050506;
+            --card-bg: rgba(20, 20, 22, 0.6);
+            --border: rgba(42, 42, 44, 0.8);
+            --accent-red: #ff3333;
+            --accent-red-glow: rgba(255, 51, 51, 0.4);
+            --text: #eaeaea;
+            --text-muted: #8a8a8d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Ambient background glow */
+        .blob {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent-red-glow) 0%, transparent 70%);
+            filter: blur(40px);
+            z-index: 0;
+            animation: pulse-blob 8s infinite alternate;
+        }
+        
+        .blob-1 {
+            top: -100px;
+            left: -100px;
+        }
+        
+        .blob-2 {
+            bottom: -100px;
+            right: -100px;
+            animation-delay: 4s;
+        }
+
+        @keyframes pulse-blob {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.3); opacity: 0.8; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 440px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px 32px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Pulsing signal rings */
+        .logo-container {
+            position: relative;
+            margin-bottom: 28px;
+        }
+
+        .pulse-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-red);
+            animation: ring-expand 2s infinite ease-out;
+            opacity: 0;
+        }
+
+        .pulse-ring:nth-child(2) {
+            animation-delay: 0.6s;
+        }
+
+        .pulse-ring:nth-child(3) {
+            animation-delay: 1.2s;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #141416;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-dot {
+            width: 16px;
+            height: 16px;
+            background-color: var(--accent-red);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--accent-red);
+            animation: pulse-dot 1.5s infinite alternate;
+        }
+
+        @keyframes ring-expand {
+            0% {
+                width: 80px;
+                height: 80px;
+                opacity: 0.8;
+            }
+            100% {
+                width: 180px;
+                height: 180px;
+                opacity: 0;
+            }
+        }
+
+        @keyframes pulse-dot {
+            0% { transform: scale(0.85); box-shadow: 0 0 8px var(--accent-red); }
+            100% { transform: scale(1.15); box-shadow: 0 0 20px var(--accent-red); }
+        }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 32px;
+        }
+
+        .connection-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            border-radius: 99px;
+            padding: 8px 16px;
+            margin-bottom: 32px;
+            font-family: 'Space Grotesk', monospace;
+            font-size: 14px;
+        }
+
+        .avatar-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #00ff66;
+            box-shadow: 0 0 8px #00ff66;
+        }
+
+        .username {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 16px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #ffffff;
+            color: #050506;
+            margin-bottom: 12px;
+            border: 1px solid #ffffff;
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .footer {
+            margin-top: 24px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <div class="container">
+        <div class="card">
+            <div class="logo-container">
+                <div class="pulse-ring"></div>
+                <div class="pulse-ring"></div>
+                <div class="pulse-ring"></div>
+                <div class="logo">
+                    <div class="logo-dot"></div>
+                </div>
+            </div>
+
+            <h1>Glyph Walkie</h1>
+            <p class="subtitle" id="status-message">Connecting to Walkie Talkie channel...</p>
+
+            <div class="connection-pill" id="invite-pill" style="display: none;">
+                <div class="avatar-dot"></div>
+                <span>Connect with <span class="username" id="peer-username">User</span></span>
+            </div>
+
+            <a href="#" class="btn btn-primary" id="btn-open">Open in Glyph Lab</a>
+            <a href="https://play.google.com/store/apps/details?id=com.projectkriya.glyphlab" class="btn btn-secondary">Get Glyph Lab App</a>
+
+            <div class="footer">
+                Glyph Lab • Nothing Phone Glyph Matrix Toys
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Parse parameters from URL query string
+        const urlParams = new URLSearchParams(window.location.search);
+        const channelId = urlParams.get('channel_id');
+        const peerUsername = urlParams.get('peer_username');
+        const peerDeviceId = urlParams.get('peer_device_id');
+
+        const statusMessage = document.getElementById('status-message');
+        const invitePill = document.getElementById('invite-pill');
+        const peerNameSpan = document.getElementById('peer-username');
+        const btnOpen = document.getElementById('btn-open');
+
+        // Build Custom Scheme URL
+        let appLink = 'glyphlab://walkie/connect';
+        if (channelId && peerUsername && peerDeviceId) {
+            appLink += `?channel_id=${encodeURIComponent(channelId)}&peer_username=${encodeURIComponent(peerUsername)}&peer_device_id=${encodeURIComponent(peerDeviceId)}`;
+            
+            // Update UI with peer username
+            peerNameSpan.textContent = peerUsername;
+            invitePill.style.display = 'flex';
+            statusMessage.textContent = 'You have been invited to join a push-to-talk voice session!';
+        } else {
+            statusMessage.textContent = 'Use this link on your Nothing phone to connect with a Walkie peer.';
+        }
+
+        btnOpen.href = appLink;
+
+        // Auto-redirect if on Android
+        const isAndroid = /Android/i.test(navigator.userAgent);
+        if (isAndroid) {
+            setTimeout(() => {
+                window.location.href = appLink;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
