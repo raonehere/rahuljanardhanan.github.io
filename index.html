@@ -4,48 +4,202 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Rahul Janardhanan</title>
-  <meta name="theme-color" content="#0b0b0c">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg:#0b0b0c;
-      --fg:#eaeaea;
-      --muted:#a3a3a3;
-      --card:#141416;
-      --border:#2a2a2e;
-      --hover:#1b1b1f;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      display:flex; align-items:center; justify-content:center;
-      min-height:100vh; background:var(--bg); color:var(--fg);
-    }
-    main{ text-align:center; padding:20px; }
-    h1{ margin:0 0 .4em; font-size:2rem; font-weight:600; }
-    p{ margin:0 0 1.5em; color:var(--muted); }
-    nav a{
-      display:inline-block;
-      margin:.3em; padding:.6em 1.2em;
-      border:1px solid var(--border); border-radius:8px;
-      text-decoration:none; color:var(--fg); background:var(--card);
-      font-weight:500; transition:background .2s, border-color .2s, transform .06s ease;
-    }
-    nav a:hover{ background:var(--hover); border-color:#3a3a40; transform:translateY(-1px); }
-    nav a:active{ transform:translateY(0); }
-  </style>
+  <meta name="description" content="Rahul Janardhanan — Design, Animation, Video, and Photo.">
+  <meta name="theme-color" content="#000000">
+  <link rel="canonical" href="https://rahuljanardhanan.com/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <main>
-    <h1>Rahul Janardhanan</h1>
-    <p>Multidisciplinary artist</p>
-    <nav>
-      <a href="https://raonehere.notion.site/Rahul-Janardhanan-Portfolio-6a818cbd5bdb4e199949b0603267a09d?source=copy_link" target="_blank" rel="noopener">Portfolio</a>
-      <a href="https://instagram.com/ravanan.jpg" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://twitter.com/raonehere" target="_blank" rel="noopener">Twitter</a>
-    </nav>
+<body id="top">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="#top">Rahul Janardhanan</a>
+      <nav class="nav-links" aria-label="Sections">
+        <a href="#recent">Recent</a>
+        <a href="#personal">Personal</a>
+        <a href="#client">Client</a>
+        <a href="#connect">Connect</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="shell">
+        <h1>Rahul Janardhanan</h1>
+        <p>Design · Animation · Video · Photo</p>
+      </div>
+    </section>
+
+    <section class="section" id="recent">
+      <div class="shell">
+        <div class="section-head">
+          <h2>Recent Projects</h2>
+        </div>
+
+        <div class="featured">
+          <article class="card card-lead" id="snake-widget">
+            <div class="media">
+              <img src="assets/snake-cover.png" alt="Snake Widget for NothingOS" width="1920" height="1080">
+            </div>
+            <div class="card-body">
+              <p class="kicker"><span class="mark mark-yellow" aria-hidden="true"></span> Personal · Design</p>
+              <h3>Snake Widget for NothingOS</h3>
+              <p class="summary">In January 2024 Rahul explored playful, useful widget ideas for Nothing OS, including a tiny home-screen version of the classic Snake game. He contributed the concept and the visual design — built with community developer Thomas Legendre — and it launched in December 2024 in the Nothing Community Widgets app and has crossed 100,000 downloads.</p>
+              <p class="card-links">
+                <a href="https://play.google.com/store/apps/details?id=com.nothing.communitywidgets" target="_blank" rel="noopener noreferrer">Nothing Community Widgets</a>
+                <a href="https://www.instagram.com/reel/DDKaf3_IdB-/" target="_blank" rel="noopener noreferrer">Instagram reel</a>
+                <a href="https://nothing.tech/" target="_blank" rel="noopener noreferrer">Nothing</a>
+              </p>
+            </div>
+          </article>
+
+          <div class="featured-row">
+            <article class="card">
+              <div class="media media-placeholder" data-cover="dps-uk">
+                <!-- replace with image -->
+              </div>
+              <div class="card-body">
+                <p class="kicker"><span class="mark mark-blue" aria-hidden="true"></span> Client · Animation</p>
+                <h3>DPS-UK / Animated Explainer</h3>
+                <p class="summary">DPS-UK by Freston Analytics is a platform that helps dental clinics manage appointments and patient health records. They asked Rahul for an engaging explainer video; despite tight time constraints it was delivered ahead of schedule.</p>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="media media-placeholder" data-cover="kettle">
+                <!-- replace with image -->
+              </div>
+              <div class="card-body">
+                <p class="kicker"><span class="mark mark-blue" aria-hidden="true"></span> Client · Animation · with Pixpil Agency</p>
+                <h3>Kettle / Logo Animation</h3>
+                <p class="summary">Kettle is a dating app built in Kerala that takes a fresh, thoughtful approach to dating. Rahul collaborated with Pixpil Agency on motion graphics for the logo and other visual elements in the brand system.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="personal">
+      <div class="shell">
+        <div class="section-head">
+          <span class="mark mark-yellow" aria-hidden="true"></span>
+          <h2>Personal Projects</h2>
+        </div>
+        <div class="groups groups-3">
+          <div class="group">
+            <h3>Design</h3>
+            <ul>
+              <li><a href="#snake-widget">Snake Widget for NothingOS</a></li>
+              <li>Widget concepts for NothingOS</li>
+            </ul>
+          </div>
+          <div class="group">
+            <h3>Video</h3>
+            <ul>
+              <li>Nothing Phone 2a / Launch Event Video</li>
+              <li>Welcome to the Bright Side</li>
+            </ul>
+          </div>
+          <div class="group">
+            <h3>Animation</h3>
+            <ul>
+              <li>Visualising Words</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="client">
+      <div class="shell">
+        <div class="section-head">
+          <span class="mark mark-blue" aria-hidden="true"></span>
+          <h2>Client Projects</h2>
+        </div>
+        <div class="groups groups-4">
+          <div class="group">
+            <h3>Design</h3>
+            <ul>
+              <li>Logo / Branding</li>
+              <li>Social Media Posters</li>
+              <li>Poster Design</li>
+              <li>Infographics</li>
+              <li>Brochures</li>
+              <li>Thumbnail Design</li>
+            </ul>
+          </div>
+          <div class="group">
+            <h3>Animation</h3>
+            <ul>
+              <li>Animated Explainers</li>
+              <li>Logo Animation</li>
+              <li>Music / Lyrical Animation</li>
+              <li>Social Media Animations</li>
+            </ul>
+          </div>
+          <div class="group">
+            <h3>Photo</h3>
+            <ul>
+              <li>Portrait Photography</li>
+              <li>Property Documentation</li>
+              <li>Product Photography</li>
+            </ul>
+          </div>
+          <div class="group">
+            <h3>Video</h3>
+            <ul>
+              <li>Shorts</li>
+              <li>VFX</li>
+              <li>Mini Documentaries</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="connect">
+      <div class="shell">
+        <div class="section-head">
+          <h2>Connect with me</h2>
+        </div>
+        <ul class="connect-list">
+          <li>
+            <a class="connect-link" href="mailto:bjrahul7@gmail.com">
+              <span class="connect-label">Email</span>
+              <span class="connect-value">bjrahul7@gmail.com</span>
+            </a>
+          </li>
+          <li>
+            <a class="connect-link" href="https://instagram.com/rahul.janar.dhanan" target="_blank" rel="noopener noreferrer">
+              <span class="connect-label">Instagram</span>
+              <span class="connect-value">instagram.com/rahul.janar.dhanan</span>
+            </a>
+          </li>
+          <li>
+            <a class="connect-link" href="https://x.com/raonehere" target="_blank" rel="noopener noreferrer">
+              <span class="connect-label">X</span>
+              <span class="connect-value">x.com/raonehere</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
   </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-inner">
+      <div>
+        <p class="footer-name">Rahul Janardhanan</p>
+        <p class="footer-meta">Design · Animation · Video · Photo</p>
+      </div>
+      <a class="footer-top" href="#top">Back to top</a>
+    </div>
+  </footer>
 </body>
 </html>
