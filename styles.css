@@ -6,7 +6,7 @@
   --yellow: #ffd100;
   --blue: #0057b8;
   --red: #e30613;
-  --pad: 16px;
+  --pad: 24px;
   --header: 64px;
 }
 
@@ -18,6 +18,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 128px;
   color-scheme: dark;
 }
 
@@ -106,9 +107,11 @@ a {
 }
 
 .brand {
+  flex: none;
   text-decoration: none;
   font-weight: 500;
   letter-spacing: -0.02em;
+  white-space: nowrap;
 }
 
 .nav-links {
@@ -376,12 +379,6 @@ a {
   color: var(--text);
 }
 
-@media (min-width: 480px) {
-  :root {
-    --pad: 24px;
-  }
-}
-
 @media (min-width: 768px) {
   :root {
     --pad: 40px;
@@ -447,12 +444,15 @@ a {
 
 @media (max-width: 719px) {
   .header-inner {
+    flex-direction: column;
     align-items: flex-start;
+    gap: 0;
   }
 
   .nav-links {
     width: 100%;
     justify-content: space-between;
+    flex-wrap: nowrap;
     gap: 8px;
   }
 }
