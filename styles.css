@@ -760,6 +760,67 @@ a.card-link:hover h2 {
   }
 }
 
+.landing {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.landing-wrap {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  padding-block: 48px;
+}
+
+.landing-main h1 {
+  font-size: clamp(40px, 8vw, 72px);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+}
+
+.landing-intro {
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 20px;
+}
+
+.landing-actions {
+  margin-top: 32px;
+}
+
+.landing-portfolio {
+  display: inline-block;
+  background: #f5f5f5;
+  color: #000000;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 12px 20px;
+}
+
+.landing-portfolio:hover {
+  background: #ffffff;
+}
+
+.landing-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin-top: 24px;
+  padding: 0;
+  list-style: none;
+}
+
+.landing-links a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.landing-links a:hover {
+  color: var(--text);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
