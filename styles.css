@@ -507,6 +507,7 @@ a {
 .prose .player,
 .prose .embed,
 .prose .figure,
+.prose .gallery,
 .prose .link-line,
 .prose .file-block,
 .prose .card-grid {
@@ -558,18 +559,53 @@ a {
   overflow-wrap: anywhere;
 }
 
-.figure img {
-  width: 100%;
+.article .figure,
+.article .player,
+.article .file-block,
+.article .embed,
+.article .soon,
+.article .gallery {
+  max-width: 960px;
+  margin-inline: auto;
+}
+
+.article .figure {
+  text-align: center;
+}
+
+.figure img,
+.article .player {
+  width: auto;
   height: auto;
+  max-width: 100%;
+  max-height: 75vh;
+  margin-inline: auto;
+  object-fit: contain;
   border: 1px solid var(--line);
+}
+
+.article .gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 16px;
+}
+
+.article .gallery .figure {
+  margin: 0;
+  max-width: none;
+}
+
+.article .gallery img {
+  width: 100%;
+  max-height: 45vh;
 }
 
 .soon,
 .embed {
   aspect-ratio: 16 / 9;
+  width: min(960px, 100%, calc(75vh * 16 / 9));
   border: 1px solid var(--line);
   background: #0a0a0a;
-  max-width: 960px;
 }
 
 .soon {
@@ -585,11 +621,7 @@ a {
 
 .player {
   display: block;
-  width: 100%;
-  height: auto;
-  max-width: 960px;
   background: #000000;
-  border: 1px solid var(--line);
 }
 
 .file-block {
@@ -599,7 +631,8 @@ a {
 .pdf-frame {
   display: block;
   width: 100%;
-  height: 720px;
+  height: min(720px, 75vh);
+  max-height: 75vh;
   margin-top: 16px;
   border: 1px solid var(--line);
   background: #0a0a0a;
