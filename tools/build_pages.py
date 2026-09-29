@@ -2,7 +2,8 @@
 """Build static project and category pages from content/pages/*.md.
 
 Run from the repo root: python3 tools/build_pages.py
-Writes projects/<slug>/index.html. Images stay in media/.
+Writes portfolio/projects/<slug>/index.html and redirect stubs at projects/<slug>/.
+Images stay in media/. Also writes the site landing page from content/landing.md.
 """
 
 import html
@@ -11,7 +12,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGES_DIR = ROOT / "content" / "pages"
-OUT_DIR = ROOT / "projects"
+LANDING_MD = ROOT / "content" / "landing.md"
+OUT_DIR = ROOT / "portfolio" / "projects"
+REDIRECT_DIR = ROOT / "projects"
+# portfolio/projects/<slug>/index.html -> repo root
+ASSET_PREFIX = "../../../"
 SITE = "https://rahuljanardhanan.com"
 
 LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
@@ -68,13 +73,17 @@ def bold(escaped):
     return BOLD_RE.sub(r"<strong>\1</strong>", escaped)
 
 
-def media_src(raw):
-    name = raw.strip()
-    marker = "media/"
-    idx = name.find(marker)
+def media_rel(raw):
+    name = (raw or "").strip().replace("\\", "/")
+    idx = name.find("media/")
     if idx == -1:
         return None
-    return "../../" + name[idx:]
+    return name[idx:]
+
+
+def media_src(raw):
+    rel = media_rel(raw)
+    return (ASSET_PREFIX + rel) if rel else None
 
 
 def resolve_href(url, by_notion, by_slug):
@@ -247,7 +256,7 @@ def video_block(kind, name, slug):
         filename = media_file(slug, name)
         path = ROOT / "media" / slug / filename
         if filename in AVAILABLE_FILES.get(slug, []) and path.is_file():
-            src = f"../../media/{slug}/{filename}"
+            src = f"{ASSET_PREFIX}media/{slug}/{filename}"
             return (
                 f'<div class="file-block">'
                 f'<p class="link-line"><a href="{esc(src)}" download>{esc(filename)}</a></p>'
@@ -260,7 +269,7 @@ def video_block(kind, name, slug):
     path = ROOT / "media" / slug / filename
     if not mode or not path.is_file():
         return placeholder(kind, name)
-    src = f"../../media/{slug}/{filename}"
+    src = f"{ASSET_PREFIX}media/{slug}/{filename}"
     if mode == "loop":
         attrs = 'autoplay muted loop playsinline preload="metadata"'
     else:
@@ -302,7 +311,7 @@ def first_visual(page):
         return media_src(match.group(2))
     poster = ROOT / "media" / page["slug"] / "poster.jpg"
     if poster.is_file():
-        return f"../../media/{page['slug']}/poster.jpg"
+        return f"{ASSET_PREFIX}media/{page['slug']}/poster.jpg"
     return None
 
 
@@ -412,7 +421,7 @@ def render_body(page, by_notion, by_slug, cards_html):
 
 
 def crumbs(page, by_slug):
-    parts = [('Home', "../../")]
+    parts = [("Home", f"{ASSET_PREFIX}"), ("Portfolio", "../../")]
     parent = page.get("parent")
     if parent and parent != "index" and parent in by_slug:
         parts.append((by_slug[parent]["title"], f"../{parent}/"))
@@ -477,17 +486,17 @@ def page_html(page, by_notion, by_slug):
   <title>{esc(title)} — Rahul Janardhanan</title>
   <meta name="description" content="{desc}">
   <meta name="theme-color" content="#000000">
-  <link rel="canonical" href="{SITE}/projects/{esc(page['slug'])}/">
+  <link rel="canonical" href="{SITE}/portfolio/projects/{esc(page['slug'])}/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="{ASSET_PREFIX}styles.css">
 </head>
 <body id="top">
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="shell header-inner">
-      <a class="brand" href="../../">Rahul Janardhanan</a>
+      <a class="brand" href="{ASSET_PREFIX}">Rahul Janardhanan</a>
     </div>
   </header>
   <main id="main">
@@ -516,6 +525,90 @@ def page_html(page, by_notion, by_slug):
 """
 
 
+def redirect_html(slug):
+    url = f"/portfolio/projects/{slug}/"
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="refresh" content="0; url={url}">
+  <link rel="canonical" href="{SITE}{url}">
+  <title>Redirecting…</title>
+  <script>location.replace({json_escape(url)});</script>
+</head>
+<body>
+  <p><a href="{url}">Continue to this project</a></p>
+</body>
+</html>
+"""
+
+
+def json_escape(value):
+    return '"' + value.replace("\\", "\\\\").replace('"', '\\"') + '"'
+
+
+def landing_fields():
+    text = LANDING_MD.read_text(encoding="utf-8") if LANDING_MD.exists() else ""
+    if text.startswith("---"):
+        _, fm, _body = text.split("---", 2)
+    else:
+        fm = text
+    fields = {
+        "title": "Rahul Janardhanan",
+        "intro": "Designer, animator, video & photo.",
+        "email": "rahul.janardhanan.here@gmail.com",
+        "instagram": "https://instagram.com/rahul.janar.dhanan",
+        "x": "https://x.com/raonehere",
+    }
+    for line in fm.splitlines():
+        if ":" not in line or line.startswith(" ") or line.startswith("#"):
+            continue
+        key, value = line.split(":", 1)
+        key = key.strip()
+        value = value.strip().strip('"')
+        if key in fields and value:
+            fields[key] = value
+    return fields
+
+
+def write_landing():
+    # Copy lives in content/landing.md so it is easy to edit.
+    fields = landing_fields()
+    email = fields["email"]
+    doc = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{esc(fields["title"])}</title>
+  <meta name="description" content="{esc(fields["intro"])}">
+  <meta name="theme-color" content="#000000">
+  <link rel="canonical" href="{SITE}/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="landing" id="top">
+  <!-- Landing copy: edit content/landing.md (title, intro, email, instagram, x). -->
+  <main class="landing-wrap">
+    <div class="shell landing-main">
+      <h1>{esc(fields["title"])}</h1>
+      <p class="landing-intro">{esc(fields["intro"])}</p>
+      <p class="landing-actions"><a class="landing-portfolio" href="portfolio/">Portfolio</a></p>
+      <ul class="landing-links">
+        <li><a href="mailto:{esc(email)}">{esc(email)}</a></li>
+        <li><a href="{esc(fields["instagram"])}" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+        <li><a href="{esc(fields["x"])}" target="_blank" rel="noopener noreferrer">X</a></li>
+      </ul>
+    </div>
+  </main>
+</body>
+</html>
+"""
+    (ROOT / "index.html").write_text(doc, encoding="utf-8")
+
+
 def visible_text(doc):
     return re.sub(r"<!--.*?-->", "", doc, flags=re.S)
 
@@ -537,12 +630,12 @@ def main():
         if page["slug"] == "index":
             continue
         for match in IMG_RE.finditer(page["body"]):
-            src = media_src(match.group(2))
-            if not src or not (ROOT / src.replace("../../", "")).exists():
+            rel = media_rel(match.group(2))
+            if not rel or not (ROOT / rel).exists():
                 problems.append(f"missing image {page['slug']}: {match.group(2)}")
         if page.get("cover"):
-            src = media_src(page["cover"])
-            if not src or not (ROOT / src.replace("../../", "")).exists():
+            rel = media_rel(page["cover"])
+            if not rel or not (ROOT / rel).exists():
                 problems.append(f"missing cover {page['slug']}: {page['cover']}")
         doc = page_html(page, by_notion, by_slug)
         shown = visible_text(doc)
@@ -552,7 +645,11 @@ def main():
         dest = OUT_DIR / page["slug"] / "index.html"
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_text(doc, encoding="utf-8")
+        redirect = REDIRECT_DIR / page["slug"] / "index.html"
+        redirect.parent.mkdir(parents=True, exist_ok=True)
+        redirect.write_text(redirect_html(page["slug"]), encoding="utf-8")
         written.append(page["slug"])
+    write_landing()
     print(f"wrote {len(written)} pages")
     if problems:
         print("PROBLEMS")
