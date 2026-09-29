@@ -488,12 +488,6 @@ def page_html(page, by_notion, by_slug):
   <header class="site-header">
     <div class="shell header-inner">
       <a class="brand" href="../../">Rahul Janardhanan</a>
-      <nav class="nav-links" aria-label="Sections">
-        <a href="../../#recent">Recent</a>
-        <a href="../../#personal">Personal</a>
-        <a href="../../#client">Client</a>
-        <a href="../../#connect">Connect</a>
-      </nav>
     </div>
   </header>
   <main id="main">
