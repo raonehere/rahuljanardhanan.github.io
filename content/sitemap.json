@@ -1,0 +1,607 @@
+{
+  "title": "Rahul Janardhanan / Portfolio",
+  "slug": "index",
+  "notion_id": "6a818cbd5bdb4e199949b0603267a09d",
+  "page": "pages/index.md",
+  "sections": [
+    {
+      "title": "Recent Projects",
+      "slug": "recent",
+      "projects": [
+        {
+          "title": "Snake Widget for NothingOS",
+          "slug": "snake-widget-for-nothingos",
+          "notion_id": "20f4ccd17b4480bfb1c3d9550913758a",
+          "page": "pages/snake-widget-for-nothingos.md"
+        },
+        {
+          "title": "DPS-UK / Animated Explainer",
+          "slug": "dps-uk-animated-explainer",
+          "notion_id": "3e009bd7c28b476faba6a974bba2c716",
+          "page": "pages/dps-uk-animated-explainer.md"
+        },
+        {
+          "title": "Kettle / Logo Animation",
+          "slug": "kettle-logo-animation",
+          "notion_id": "20f4ccd17b4480c784bafa03763f4820",
+          "page": "pages/kettle-logo-animation.md"
+        }
+      ]
+    },
+    {
+      "title": "Personal Projects",
+      "slug": "personal",
+      "categories": [
+        {
+          "title": "Design",
+          "slug": "personal-design",
+          "projects": [
+            {
+              "title": "Snake Widget for NothingOS",
+              "slug": "snake-widget-for-nothingos",
+              "notion_id": "20f4ccd17b4480bfb1c3d9550913758a",
+              "page": "pages/snake-widget-for-nothingos.md"
+            },
+            {
+              "title": "Widget concepts for NothingOS",
+              "slug": "widget-concepts-for-nothingos",
+              "notion_id": "f984cf9f7fba421a812d28df9a402447",
+              "page": "pages/widget-concepts-for-nothingos.md"
+            }
+          ]
+        },
+        {
+          "title": "Video",
+          "slug": "personal-video",
+          "projects": [
+            {
+              "title": "Nothing Phone 2a / Launch Event Video",
+              "slug": "nothing-phone-2a-launch-event-video",
+              "notion_id": "469af193de5e4ed68cdf260523627e07",
+              "page": "pages/nothing-phone-2a-launch-event-video.md"
+            },
+            {
+              "title": "Welcome to the Bright Side",
+              "slug": "welcome-to-the-bright-side",
+              "notion_id": "707a732273014f44a921d2e798b4fdea",
+              "page": "pages/welcome-to-the-bright-side.md"
+            }
+          ]
+        },
+        {
+          "title": "Animation",
+          "slug": "personal-animation",
+          "projects": [
+            {
+              "title": "Visualising Words",
+              "slug": "visualising-words",
+              "notion_id": "9755af38517c4c53bb75f41e3143a4ab",
+              "page": "pages/visualising-words.md"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Client Projects",
+      "slug": "client",
+      "groups": [
+        {
+          "title": "Design",
+          "slug": "design",
+          "categories": [
+            {
+              "title": "Logo / Branding",
+              "slug": "logo-branding",
+              "notion_id": "19f10a9f269c405e8de959fae532d00f",
+              "page": "pages/logo-branding.md",
+              "projects": [
+                {
+                  "title": "Butterfly Factory, Branding",
+                  "slug": "butterfly-factory-branding",
+                  "notion_id": "aed9595e88da47b89dfe12f1fb1c4057",
+                  "page": "pages/butterfly-factory-branding.md"
+                },
+                {
+                  "title": "Pinwheels and Paper Planes",
+                  "slug": "pinwheels-and-paper-planes",
+                  "notion_id": "046effb086834387a4a2163e8a88a832",
+                  "page": "pages/pinwheels-and-paper-planes.md"
+                },
+                {
+                  "title": "Poetree Studios",
+                  "slug": "poetree-studios",
+                  "notion_id": "742514c9991e41d8b5a745f04720cda3",
+                  "page": "pages/poetree-studios.md"
+                },
+                {
+                  "title": "Moon and Whiskey",
+                  "slug": "moon-and-whiskey",
+                  "notion_id": "a3780009d4f34782a6d33fab2805a5a1",
+                  "page": "pages/moon-and-whiskey.md"
+                }
+              ]
+            },
+            {
+              "title": "Social Media Posters",
+              "slug": "social-media-posters",
+              "notion_id": "176f073f00e3420da4c566ab7da83454",
+              "page": "pages/social-media-posters.md",
+              "projects": [
+                {
+                  "title": "Flow-State",
+                  "slug": "flow-state",
+                  "notion_id": "aa71195941e34b72864c2f6279de3cf4",
+                  "page": "pages/flow-state.md"
+                },
+                {
+                  "title": "Al-Azhar Medical College",
+                  "slug": "al-azhar-medical-college",
+                  "notion_id": "a2267f326b0d4866836e1a61cb0650d0",
+                  "page": "pages/al-azhar-medical-college.md"
+                }
+              ]
+            },
+            {
+              "title": "Poster Design",
+              "slug": "poster-design",
+              "notion_id": "d7b8a7a4de384119b296276da22afd1b",
+              "page": "pages/poster-design.md",
+              "projects": [
+                {
+                  "title": "The Wardrobe, Exhibit Announcement",
+                  "slug": "the-wardrobe-exhibit-announcement",
+                  "notion_id": "7ae827c83d90424faee4c24630eba684",
+                  "page": "pages/the-wardrobe-exhibit-announcement.md"
+                },
+                {
+                  "title": "Willmount, Invitation card",
+                  "slug": "willmount-invitation-card",
+                  "notion_id": "12ea865d61f2464e82d1c25f09f71a19",
+                  "page": "pages/willmount-invitation-card.md"
+                },
+                {
+                  "title": "Pearl Express UAE",
+                  "slug": "pearl-express-uae",
+                  "notion_id": "98a1b8b3456641a787d08a8a498712bd",
+                  "page": "pages/pearl-express-uae.md"
+                }
+              ]
+            },
+            {
+              "title": "Infographics",
+              "slug": "infographics",
+              "notion_id": "e87ca23f0fa646519e7210310ff1f169",
+              "page": "pages/infographics.md",
+              "projects": []
+            },
+            {
+              "title": "Brochures",
+              "slug": "brochures",
+              "notion_id": "61edde8e743b4848b836f69420a00545",
+              "page": "pages/brochures.md",
+              "projects": [
+                {
+                  "title": "Brochure for Movement Retreat",
+                  "slug": "brochure-for-movement-retreat",
+                  "notion_id": "384f8c8a7d9041c9bac6481024dbafd9",
+                  "page": "pages/brochure-for-movement-retreat.md"
+                },
+                {
+                  "title": "Willmount Staff Guidelines Brochure",
+                  "slug": "willmount-staff-guidelines-brochure",
+                  "notion_id": "529cc431e0f5483b98fc004c8c21734b",
+                  "page": "pages/willmount-staff-guidelines-brochure.md"
+                }
+              ]
+            },
+            {
+              "title": "Thumbnail Design",
+              "slug": "thumbnail-design",
+              "notion_id": "3c3da38f3c074b03b5db845092306e3d",
+              "page": "pages/thumbnail-design.md",
+              "projects": [
+                {
+                  "title": "Roddys Reviews",
+                  "slug": "roddys-reviews",
+                  "notion_id": "2220f33d259c46159255281d66eca626",
+                  "page": "pages/roddys-reviews.md"
+                },
+                {
+                  "title": "Drew Lipps",
+                  "slug": "drew-lipps",
+                  "notion_id": "7599db71296e4fcbb0d50b00ec20afe1",
+                  "page": "pages/drew-lipps.md"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Animation",
+          "slug": "animation",
+          "categories": [
+            {
+              "title": "Animated Explainers",
+              "slug": "animated-explainers",
+              "notion_id": "05a307db0d9f43e996384f528f1cb84d",
+              "page": "pages/animated-explainers.md",
+              "projects": [
+                {
+                  "title": "DPS-UK / Animated Explainer",
+                  "slug": "dps-uk-animated-explainer",
+                  "notion_id": "3e009bd7c28b476faba6a974bba2c716",
+                  "page": "pages/dps-uk-animated-explainer.md"
+                },
+                {
+                  "title": "Testnut / Animated Explainer",
+                  "slug": "testnut-animated-explainer",
+                  "notion_id": "1384ccd17b4480fd935bd295cd459549",
+                  "page": "pages/testnut-animated-explainer.md"
+                },
+                {
+                  "title": "ONDC Network / Animated Explainer",
+                  "slug": "ondc-network-animated-explainer",
+                  "notion_id": "5bcfebdc81494a2dbc0f90f9353641ed",
+                  "page": "pages/ondc-network-animated-explainer.md"
+                },
+                {
+                  "title": "Bhima Jewellers / Animated TV Ad.",
+                  "slug": "bhima-jewellers-animated-tv-ad",
+                  "notion_id": "423fea37d93c45afba5244dfeb89c7e1",
+                  "page": "pages/bhima-jewellers-animated-tv-ad.md"
+                },
+                {
+                  "title": "Marksmen Marine / Brand Video",
+                  "slug": "marksmen-marine-brand-video",
+                  "notion_id": "8d74d3d7337341178f0fdaa73c1d517d",
+                  "page": "pages/marksmen-marine-brand-video.md"
+                },
+                {
+                  "title": "’Sara’ Movie / Animation Sequence",
+                  "slug": "sara-movie-animation-sequence",
+                  "notion_id": "0e5ef85cec9447df8d1efe4393852a0f",
+                  "page": "pages/sara-movie-animation-sequence.md"
+                },
+                {
+                  "title": "Interncan / Explainer Video",
+                  "slug": "interncan-explainer-video",
+                  "notion_id": "d856dcc3b4be42929782ce12c681285a",
+                  "page": "pages/interncan-explainer-video.md"
+                },
+                {
+                  "title": "Subco / Menu Screen Animation",
+                  "slug": "subco-menu-screen-animation",
+                  "notion_id": "d61c0f85dc814f4b950f4af7d78db8ed",
+                  "page": "pages/subco-menu-screen-animation.md"
+                },
+                {
+                  "title": "Campper / Promo Video",
+                  "slug": "campper-promo-video",
+                  "notion_id": "e2a12e008ad24facb292315a13714fc9",
+                  "page": "pages/campper-promo-video.md"
+                },
+                {
+                  "title": "SigTuple / Product Explainer Video",
+                  "slug": "sigtuple-product-explainer-video",
+                  "notion_id": "0ea85807a07f4c5fb9792614d55a8283",
+                  "page": "pages/sigtuple-product-explainer-video.md"
+                }
+              ]
+            },
+            {
+              "title": "Logo Animation",
+              "slug": "logo-animation",
+              "notion_id": "93f6032498884bfe970ec9565bc8feba",
+              "page": "pages/logo-animation.md",
+              "projects": [
+                {
+                  "title": "Kettle / Logo Animation",
+                  "slug": "kettle-logo-animation",
+                  "notion_id": "20f4ccd17b4480c784bafa03763f4820",
+                  "page": "pages/kettle-logo-animation.md"
+                },
+                {
+                  "title": "Pinwheels & Paper Planes / logo Animation",
+                  "slug": "pinwheels-paper-planes-logo-animation",
+                  "notion_id": "25e8e800b98a48f5bcc1d51860f39950",
+                  "page": "pages/pinwheels-paper-planes-logo-animation.md"
+                },
+                {
+                  "title": "OP Konzept / Logo Animation",
+                  "slug": "op-konzept-logo-animation",
+                  "notion_id": "20f4ccd17b44801795b5ee3b38f2d877",
+                  "page": "pages/op-konzept-logo-animation.md"
+                },
+                {
+                  "title": "VOY / Logo Animation",
+                  "slug": "voy-logo-animation",
+                  "notion_id": "20f4ccd17b4480f18ef2fd549f1e13c0",
+                  "page": "pages/voy-logo-animation.md"
+                },
+                {
+                  "title": "London Cutting / logo Animation",
+                  "slug": "london-cutting-logo-animation",
+                  "notion_id": "cb483978a1db49d18bb6a979cd19dfda",
+                  "page": "pages/london-cutting-logo-animation.md"
+                },
+                {
+                  "title": "Data Expert / Logo Animation",
+                  "slug": "data-expert-logo-animation",
+                  "notion_id": "59697f8d5fa941948d86edd13156461e",
+                  "page": "pages/data-expert-logo-animation.md"
+                },
+                {
+                  "title": "Jigg / Logo Animation",
+                  "slug": "jigg-logo-animation",
+                  "notion_id": "4cfbd4a1c5f8467c88175cc38c9fdd51",
+                  "page": "pages/jigg-logo-animation.md"
+                },
+                {
+                  "title": "Intermiles / Logo Animation",
+                  "slug": "intermiles-logo-animation",
+                  "notion_id": "905040b9ccc04ceabecad04098cf18c7",
+                  "page": "pages/intermiles-logo-animation.md"
+                },
+                {
+                  "title": "Fajjoski Studios / Logo Animation",
+                  "slug": "fajjoski-studios-logo-animation",
+                  "notion_id": "71363edd53d4400497e405dce0798945",
+                  "page": "pages/fajjoski-studios-logo-animation.md"
+                },
+                {
+                  "title": "Willmount / Logo Reveal Animation",
+                  "slug": "willmount-logo-reveal-animation",
+                  "notion_id": "6d1e17ec569245869deb113fab068079",
+                  "page": "pages/willmount-logo-reveal-animation.md"
+                },
+                {
+                  "title": "Willmount / Logo Animation",
+                  "slug": "willmount-logo-animation",
+                  "notion_id": "3f9fe48354574c91a1b20d57dd2c86ed",
+                  "page": "pages/willmount-logo-animation.md"
+                }
+              ]
+            },
+            {
+              "title": "Music / Lyrical Animation",
+              "slug": "music-lyrical-animation",
+              "notion_id": "813faa2483d040d79714e35f8fb271df",
+              "page": "pages/music-lyrical-animation.md",
+              "projects": [
+                {
+                  "title": "Rehnuma / Lyrical Animation",
+                  "slug": "rehnuma-lyrical-animation",
+                  "notion_id": "c0295c24eb0e47ac87f986dc14db22d5",
+                  "page": "pages/rehnuma-lyrical-animation.md"
+                },
+                {
+                  "title": "Mere Junior / Lyrical Animation",
+                  "slug": "mere-junior-lyrical-animation",
+                  "notion_id": "befdcbe362084ab7a322188e313a73c0",
+                  "page": "pages/mere-junior-lyrical-animation.md"
+                },
+                {
+                  "title": "Khwab Tu / Lyrical Animation",
+                  "slug": "khwab-tu-lyrical-animation",
+                  "notion_id": "7f00728fce4f44a1af1329b906200694",
+                  "page": "pages/khwab-tu-lyrical-animation.md"
+                },
+                {
+                  "title": "Piya Re / Lyrical Video",
+                  "slug": "piya-re-lyrical-video",
+                  "notion_id": "6e9204b2ebcb48fca1cf948775799d27",
+                  "page": "pages/piya-re-lyrical-video.md"
+                },
+                {
+                  "title": "Zalim Ishq Lyrical / Animation Series",
+                  "slug": "zalim-ishq-lyrical-animation-series",
+                  "notion_id": "f3044522cf2840059aa8c56745894b55",
+                  "page": "pages/zalim-ishq-lyrical-animation-series.md"
+                },
+                {
+                  "title": "Jonitha Gandhi / Concert Animation",
+                  "slug": "jonitha-gandhi-concert-animation",
+                  "notion_id": "f99b39f445604e0c902a428ef884a255",
+                  "page": "pages/jonitha-gandhi-concert-animation.md"
+                }
+              ]
+            },
+            {
+              "title": "Social Media Animations",
+              "slug": "social-media-animations",
+              "notion_id": "82a227540f84481690e00186b99619d5",
+              "page": "pages/social-media-animations.md",
+              "projects": [
+                {
+                  "title": "Tacobell / Reels",
+                  "slug": "tacobell-reels",
+                  "notion_id": "72312e015e354e509cd53a8727323b84",
+                  "page": "pages/tacobell-reels.md",
+                  "cross_link": true,
+                  "canonical_parent": "shorts"
+                },
+                {
+                  "title": "Rajakumari Porductions",
+                  "slug": "rajakumari-productions",
+                  "notion_id": "072f700f86e34c5eb0231dcd163204d9",
+                  "page": "pages/rajakumari-productions.md"
+                },
+                {
+                  "title": "Subco / Mario Animation Reel",
+                  "slug": "subco-mario-animation-reel",
+                  "notion_id": "024147d1dac64584a435b9266d0e1bbc",
+                  "page": "pages/subco-mario-animation-reel.md"
+                },
+                {
+                  "title": "Avees Puttu House / Announcement Animation",
+                  "slug": "avees-puttu-house-announcement-animation",
+                  "notion_id": "2c8a567a36f04d7c909af8aad6b42097",
+                  "page": "pages/avees-puttu-house-announcement-animation.md"
+                },
+                {
+                  "title": "Trinity Builders / TV Ad. Animation",
+                  "slug": "trinity-builders-tv-ad-animation",
+                  "notion_id": "7e4204f0474a4c54b7917d7e50fe5ce0",
+                  "page": "pages/trinity-builders-tv-ad-animation.md"
+                },
+                {
+                  "title": "Bhima Jewellers / Animated TV Ad.",
+                  "slug": "bhima-jewellers-animated-tv-ad-social",
+                  "notion_id": "948ea54a639e45e1806f924a1800bbd1",
+                  "page": "pages/bhima-jewellers-animated-tv-ad-social.md"
+                },
+                {
+                  "title": "Campper / Social Media Campaign",
+                  "slug": "campper-social-media-campaign",
+                  "notion_id": "48124691d6f14803a481ef0ba11d5e0a",
+                  "page": "pages/campper-social-media-campaign.md"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Photo",
+          "slug": "photo",
+          "categories": [
+            {
+              "title": "Portrait Photography",
+              "slug": "portrait-photography",
+              "notion_id": "eabf2a5a63b34d7da682fce559f1a8e5",
+              "page": "pages/portrait-photography.md",
+              "projects": [
+                {
+                  "title": "Light Painting Portraits",
+                  "slug": "light-painting-portraits",
+                  "notion_id": "3b61ebec8b0c4f2c8f29bcc4bbad6b96",
+                  "page": "pages/light-painting-portraits.md"
+                },
+                {
+                  "title": "Black & White Photography with Phone",
+                  "slug": "black-and-white-photography-with-phone",
+                  "notion_id": "b262748f62234f8f942c737b6101dd0a",
+                  "page": "pages/black-and-white-photography-with-phone.md"
+                }
+              ]
+            },
+            {
+              "title": "Property Documentation",
+              "slug": "property-documentation",
+              "notion_id": "6849bd30f5d34950967a7e4c69655721",
+              "page": "pages/property-documentation.md",
+              "projects": []
+            },
+            {
+              "title": "Product Photography",
+              "slug": "product-photography",
+              "notion_id": "5490e014b62a4596b0d828b2f852f787",
+              "page": "pages/product-photography.md",
+              "projects": [
+                {
+                  "title": "On Your Tales - playing cards",
+                  "slug": "on-your-tales-playing-cards",
+                  "notion_id": "20f4ccd17b44806b9c31fe74e06422f4",
+                  "page": "pages/on-your-tales-playing-cards.md"
+                },
+                {
+                  "title": "Nothing Flat-lay Photography Challenge",
+                  "slug": "nothing-flat-lay-photography-challenge",
+                  "notion_id": "20f4ccd17b4480c787faf25c608a5993",
+                  "page": "pages/nothing-flat-lay-photography-challenge.md"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Video",
+          "slug": "video",
+          "categories": [
+            {
+              "title": "Shorts",
+              "slug": "shorts",
+              "notion_id": "00c7f5c14e9d4598a45e35b0c62d5f17",
+              "page": "pages/shorts.md",
+              "projects": [
+                {
+                  "title": "Nothing.tech / Reels",
+                  "slug": "nothing-tech-reels",
+                  "notion_id": "5dde059283114753b07d251874ada4af",
+                  "page": "pages/nothing-tech-reels.md"
+                },
+                {
+                  "title": "Tacobell / Reels",
+                  "slug": "tacobell-reels",
+                  "notion_id": "72312e015e354e509cd53a8727323b84",
+                  "page": "pages/tacobell-reels.md"
+                },
+                {
+                  "title": "Willmount / Reels",
+                  "slug": "willmount-reels",
+                  "notion_id": "d68615b89b5b4ae485186d56435880a1",
+                  "page": "pages/willmount-reels.md"
+                },
+                {
+                  "title": "DUNKIN - Animated Reel",
+                  "slug": "dunkin-animated-reel",
+                  "notion_id": "20f4ccd17b4480b0b1e1f39a85503723",
+                  "page": "pages/dunkin-animated-reel.md"
+                }
+              ]
+            },
+            {
+              "title": "VFX",
+              "slug": "vfx",
+              "notion_id": "cfebea963328412eb65ed698646aaec4",
+              "page": "pages/vfx.md",
+              "projects": [
+                {
+                  "title": "Stanley Tools / Ad Film VFX",
+                  "slug": "stanley-tools-ad-film-vfx",
+                  "notion_id": "d77835fefb8b4ad098a17bc19ddf8b9b",
+                  "page": "pages/stanley-tools-ad-film-vfx.md"
+                }
+              ]
+            },
+            {
+              "title": "Mini Documentaries",
+              "slug": "mini-documentaries",
+              "notion_id": "a0a15a30ba964858a85c57119dc12be3",
+              "page": "pages/mini-documentaries.md",
+              "projects": [
+                {
+                  "title": "Nothing Phone 2a / Launch Video",
+                  "slug": "nothing-phone-2a-launch-video",
+                  "notion_id": "9a3a869a8ae44f20909f3729ad83c651",
+                  "page": "pages/nothing-phone-2a-launch-video.md"
+                },
+                {
+                  "title": "Avees / Documentry",
+                  "slug": "avees-documentary",
+                  "notion_id": "6aa8a8dc00ca4daa9f86b0acb5f8ba12",
+                  "page": "pages/avees-documentary.md"
+                },
+                {
+                  "title": "Campper / Campaign Video",
+                  "slug": "campper-campaign-video",
+                  "notion_id": "b7985f3c5f4a4527919aaa0ba1b7ab5a",
+                  "page": "pages/campper-campaign-video.md"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Connect with me",
+      "slug": "connect",
+      "links": {
+        "email": "bjrahul7@gmail.com",
+        "instagram": "https://instagram.com/rahul.janar.dhanan",
+        "x": "https://x.com/raonehere"
+      }
+    }
+  ]
+}
