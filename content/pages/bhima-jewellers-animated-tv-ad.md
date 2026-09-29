@@ -6,8 +6,7 @@ category: "animation"
 parent: "animated-explainers"
 notion_id: "423fea37d93c45afba5244dfeb89c7e1"
 cover: null
-unavailable_media:
-  - "video: Animated_Ad._for_Bhima_Jewellers.mp4"
+unavailable_media: []
 ---
 # Bhima Jewellers / Animated TV Ad.
 

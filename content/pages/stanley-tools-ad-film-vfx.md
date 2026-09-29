@@ -6,10 +6,7 @@ category: "video"
 parent: "vfx"
 notion_id: "d77835fefb8b4ad098a17bc19ddf8b9b"
 cover: null
-unavailable_media:
-  - "video: Correcting_the_orientation_of_the_text_in_the_screwdriver.mp4"
-  - "video: Adding_back_the_Insulator_in_screwsriver.mp4"
-  - "video: Removing_the_missing_painting_area_from_the_previous_takes..mp4"
+unavailable_media: []
 ---
 # Stanley Tools / Ad Film VFX
 

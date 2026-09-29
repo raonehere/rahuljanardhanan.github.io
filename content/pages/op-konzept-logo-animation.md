@@ -6,8 +6,7 @@ category: "animation"
 parent: "logo-animation"
 notion_id: "20f4ccd17b44801795b5ee3b38f2d877"
 cover: null
-unavailable_media:
-  - "video: op_-_konzept_black_on_white-1.mov"
+unavailable_media: []
 ---
 # OP Konzept / Logo Animation
 

@@ -6,8 +6,7 @@ category: "animation"
 parent: "animated-explainers"
 notion_id: "3e009bd7c28b476faba6a974bba2c716"
 cover: null
-unavailable_media:
-  - "video: dps-uk_animated_explainer_v5_compressed.mp4"
+unavailable_media: []
 ---
 # DPS-UK / Animated Explainer
 

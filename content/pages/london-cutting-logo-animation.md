@@ -6,8 +6,7 @@ category: "animation"
 parent: "logo-animation"
 notion_id: "cb483978a1db49d18bb6a979cd19dfda"
 cover: null
-unavailable_media:
-  - "video: london_cutting_white_bg_compressed.mp4"
+unavailable_media: []
 ---
 # London Cutting / logo Animation
 

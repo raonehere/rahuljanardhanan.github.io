@@ -6,8 +6,7 @@ category: "animation"
 parent: "social-media-animations"
 notion_id: "948ea54a639e45e1806f924a1800bbd1"
 cover: null
-unavailable_media:
-  - "video: Animated_Ad._for_Bhima_Jewellers.mp4"
+unavailable_media: []
 ---
 # Bhima Jewellers / Animated TV Ad.
 

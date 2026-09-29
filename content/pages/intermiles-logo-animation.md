@@ -6,9 +6,7 @@ category: "animation"
 parent: "logo-animation"
 notion_id: "905040b9ccc04ceabecad04098cf18c7"
 cover: null
-unavailable_media:
-  - "video: Intermiles_Logo_Animation.mp4"
-  - "video: Intermiles_Logo_Animation_v2.mp4"
+unavailable_media: []
 ---
 # Intermiles / Logo Animation
 

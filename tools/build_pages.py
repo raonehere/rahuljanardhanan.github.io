@@ -119,7 +119,8 @@ def youtube_id(url):
     return match.group(1) if match else None
 
 
-# Files shipped in media/<slug>/. "loop" is a short silent logo loop.
+# Marker name -> "loop" (short logo) or "player" (controls).
+# The .mov marker is stored on disk as mp4; see MEDIA_ALIASES.
 AVAILABLE_VIDEOS = {
     "voy-logo-animation": {
         "v_logo_animation.mp4": "loop",
@@ -128,13 +129,101 @@ AVAILABLE_VIDEOS = {
     "kettle-logo-animation": {
         "me_at_kettle_1.mp4": "loop",
         "kettle_socials.mp4": "loop",
+        "kettle_logo_edit_1.mp4": "loop",
     },
     "interncan-explainer-video": {
         "Interncan_Explainer_Video.mp4": "player",
     },
     "widget-concepts-for-nothingos": {
         "all_together.mp4": "player",
+        "10_Widget_Concepts_for_Nothing_OS.mp4": "player",
     },
+    "jigg-logo-animation": {
+        "jigg_logo_animation_whitev2.mp4": "loop",
+    },
+    "dunkin-animated-reel": {
+        "dunkin_reel_1_v2.mp4": "player",
+        "reel_3_v2.mp4": "player",
+        "reel_2_v3.mp4": "player",
+    },
+    "op-konzept-logo-animation": {
+        "op_-_konzept_black_on_white-1.mov": "loop",
+    },
+    "willmount-logo-reveal-animation": {
+        "willmount_logo_reveal_animation.mp4": "loop",
+    },
+    "willmount-logo-animation": {
+        "Willmount_logo_animation_v2.mp4": "loop",
+    },
+    "sara-movie-animation-sequence": {
+        "_Sara__Movie_Animation_Sequence.mp4": "player",
+    },
+    "subco-mario-animation-reel": {
+        "mario_subco_reel.mp4": "player",
+    },
+    "subco-menu-screen-animation": {
+        "Subco_Menu_Screen_Animation_1.mp4": "player",
+        "Subco_Menu_Screen_Animation_2.mp4": "player",
+        "Subco_Menu_Screen_Animation_3.mp4": "player",
+    },
+    "testnut-animated-explainer": {
+        "testnut_export_6_compressed.mp4": "player",
+    },
+    "sigtuple-product-explainer-video": {
+        "SigTuple_Shrava_Explainer_Video.mp4": "player",
+        "SigTuple_Shonit_Explainer_Video.mp4": "player",
+    },
+    "stanley-tools-ad-film-vfx": {
+        "Correcting_the_orientation_of_the_text_in_the_screwdriver.mp4": "player",
+        "Adding_back_the_Insulator_in_screwsriver.mp4": "player",
+        "Removing_the_missing_painting_area_from_the_previous_takes..mp4": "player",
+    },
+    "avees-puttu-house-announcement-animation": {
+        "now_open_video_v6.mp4": "player",
+    },
+    "intermiles-logo-animation": {
+        "Intermiles_Logo_Animation.mp4": "loop",
+        "Intermiles_Logo_Animation_v2.mp4": "loop",
+    },
+    "dps-uk-animated-explainer": {
+        "dps-uk_animated_explainer_v5_compressed.mp4": "player",
+    },
+    "bhima-jewellers-animated-tv-ad": {
+        "Animated_Ad._for_Bhima_Jewellers.mp4": "player",
+    },
+    "bhima-jewellers-animated-tv-ad-social": {
+        "Animated_Ad._for_Bhima_Jewellers.mp4": "player",
+    },
+    "campper-promo-video": {
+        "Campper_Promo_Video.mp4": "player",
+    },
+    "london-cutting-logo-animation": {
+        "london_cutting_white_bg_compressed.mp4": "loop",
+    },
+    "jonitha-gandhi-concert-animation": {
+        "Jonitha_Gandhi_Mental_Manadhil_Concert_Animation.mp4": "player",
+        "Jonitha_Gandhi_Telephone_Concert_Animation.mp4": "player",
+    },
+    "pinwheels-paper-planes-logo-animation": {
+        "Full_logo_animation_yellow_on_blue.mp4": "loop",
+        "Secoond_logo_animation_yellow_on_blue.mp4": "loop",
+    },
+    "data-expert-logo-animation": {
+        "data_expert_logo_animation_v2.mp4": "loop",
+    },
+    "trinity-builders-tv-ad-animation": {
+        "Trinity_builders.mp4": "player",
+    },
+}
+
+# Notion name -> file actually saved under media/<slug>/.
+MEDIA_ALIASES = {
+    ("op-konzept-logo-animation", "op_-_konzept_black_on_white-1.mov"): "op_-_konzept_black_on_white-1.mp4",
+}
+
+AVAILABLE_FILES = {
+    "brochure-for-movement-retreat": ["movement_retreat_brochure_compressed.pdf"],
+    "willmount-staff-guidelines-brochure": ["Staff_Guidelines_for_Willmount.pdf"],
 }
 
 
@@ -149,12 +238,29 @@ def placeholder(kind, name):
     )
 
 
+def media_file(slug, name):
+    return MEDIA_ALIASES.get((slug, name), name)
+
+
 def video_block(kind, name, slug):
+    if kind == "file":
+        filename = media_file(slug, name)
+        path = ROOT / "media" / slug / filename
+        if filename in AVAILABLE_FILES.get(slug, []) and path.is_file():
+            src = f"../../media/{slug}/{filename}"
+            return (
+                f'<div class="file-block">'
+                f'<p class="link-line"><a href="{esc(src)}" download>{esc(filename)}</a></p>'
+                f'<iframe class="pdf-frame" src="{esc(src)}" title="{esc(filename)}"></iframe>'
+                f"</div>"
+            )
+        return placeholder(kind, name)
     mode = AVAILABLE_VIDEOS.get(slug, {}).get(name) if kind == "video" else None
-    path = ROOT / "media" / slug / name
+    filename = media_file(slug, name)
+    path = ROOT / "media" / slug / filename
     if not mode or not path.is_file():
         return placeholder(kind, name)
-    src = f"../../media/{slug}/{name}"
+    src = f"../../media/{slug}/{filename}"
     if mode == "loop":
         attrs = 'autoplay muted loop playsinline preload="metadata"'
     else:
@@ -193,6 +299,9 @@ def first_visual(page):
     match = IMG_RE.search(page["body"])
     if match:
         return media_src(match.group(2))
+    poster = ROOT / "media" / page["slug"] / "poster.jpg"
+    if poster.is_file():
+        return f"../../media/{page['slug']}/poster.jpg"
     return None
 
 

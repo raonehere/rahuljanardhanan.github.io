@@ -6,9 +6,7 @@ category: "animation"
 parent: "animated-explainers"
 notion_id: "0ea85807a07f4c5fb9792614d55a8283"
 cover: null
-unavailable_media:
-  - "video: SigTuple_Shrava_Explainer_Video.mp4"
-  - "video: SigTuple_Shonit_Explainer_Video.mp4"
+unavailable_media: []
 ---
 # SigTuple / Product Explainer Video
 

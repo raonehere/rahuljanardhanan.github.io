@@ -6,8 +6,7 @@ category: "animation"
 parent: "animated-explainers"
 notion_id: "1384ccd17b4480fd935bd295cd459549"
 cover: null
-unavailable_media:
-  - "video: testnut_export_6_compressed.mp4"
+unavailable_media: []
 ---
 # Testnut / Animated Explainer
 
