@@ -8,8 +8,6 @@ notion_id: "20f4ccd17b4480c784bafa03763f4820"
 cover: null
 unavailable_media:
   - "video: kettle_logo_edit_1.mp4"
-  - "video: me_at_kettle_1.mp4"
-  - "video: kettle_socials.mp4"
 ---
 # Kettle / Logo Animation
 
