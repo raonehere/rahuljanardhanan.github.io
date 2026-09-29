@@ -6,8 +6,7 @@ category: "animation"
 parent: "social-media-animations"
 notion_id: "2c8a567a36f04d7c909af8aad6b42097"
 cover: null
-unavailable_media:
-  - "video: now_open_video_v6.mp4"
+unavailable_media: []
 ---
 # Avees Puttu House / Announcement Animation
 

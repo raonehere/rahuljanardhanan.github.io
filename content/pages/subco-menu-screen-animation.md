@@ -6,10 +6,7 @@ category: "animation"
 parent: "animated-explainers"
 notion_id: "d61c0f85dc814f4b950f4af7d78db8ed"
 cover: null
-unavailable_media:
-  - "video: Subco_Menu_Screen_Animation_1.mp4"
-  - "video: Subco_Menu_Screen_Animation_2.mp4"
-  - "video: Subco_Menu_Screen_Animation_3.mp4"
+unavailable_media: []
 ---
 # Subco / Menu Screen Animation
 

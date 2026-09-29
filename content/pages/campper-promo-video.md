@@ -6,8 +6,7 @@ category: "animation"
 parent: "animated-explainers"
 notion_id: "e2a12e008ad24facb292315a13714fc9"
 cover: null
-unavailable_media:
-  - "video: Campper_Promo_Video.mp4"
+unavailable_media: []
 ---
 # Campper / Promo Video
 

@@ -6,8 +6,7 @@ category: "animation"
 parent: "logo-animation"
 notion_id: "6d1e17ec569245869deb113fab068079"
 cover: null
-unavailable_media:
-  - "video: willmount_logo_reveal_animation.mp4"
+unavailable_media: []
 ---
 # Willmount / Logo Reveal Animation
 

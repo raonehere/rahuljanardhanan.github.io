@@ -6,8 +6,7 @@ category: "animation"
 parent: "logo-animation"
 notion_id: "20f4ccd17b4480c784bafa03763f4820"
 cover: null
-unavailable_media:
-  - "video: kettle_logo_edit_1.mp4"
+unavailable_media: []
 ---
 # Kettle / Logo Animation
 

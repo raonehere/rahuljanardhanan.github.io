@@ -6,8 +6,7 @@ category: "animation"
 parent: "logo-animation"
 notion_id: "4cfbd4a1c5f8467c88175cc38c9fdd51"
 cover: null
-unavailable_media:
-  - "video: jigg_logo_animation_whitev2.mp4"
+unavailable_media: []
 ---
 # Jigg / Logo Animation
 

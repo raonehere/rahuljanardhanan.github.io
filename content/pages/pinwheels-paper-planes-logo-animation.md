@@ -6,9 +6,7 @@ category: "animation"
 parent: "logo-animation"
 notion_id: "25e8e800b98a48f5bcc1d51860f39950"
 cover: null
-unavailable_media:
-  - "video: Full_logo_animation_yellow_on_blue.mp4"
-  - "video: Secoond_logo_animation_yellow_on_blue.mp4"
+unavailable_media: []
 ---
 # Pinwheels & Paper Planes / logo Animation
 

@@ -6,8 +6,7 @@ category: "animation"
 parent: "social-media-animations"
 notion_id: "7e4204f0474a4c54b7917d7e50fe5ce0"
 cover: null
-unavailable_media:
-  - "video: Trinity_builders.mp4"
+unavailable_media: []
 ---
 # Trinity Builders / TV Ad. Animation
 
