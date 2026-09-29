@@ -6,8 +6,7 @@ category: "animation"
 parent: "animated-explainers"
 notion_id: "d856dcc3b4be42929782ce12c681285a"
 cover: null
-unavailable_media:
-  - "video: Interncan_Explainer_Video.mp4"
+unavailable_media: []
 ---
 # Interncan / Explainer Video
 

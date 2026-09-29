@@ -119,6 +119,25 @@ def youtube_id(url):
     return match.group(1) if match else None
 
 
+# Files shipped in media/<slug>/. "loop" is a short silent logo loop.
+AVAILABLE_VIDEOS = {
+    "voy-logo-animation": {
+        "v_logo_animation.mp4": "loop",
+        "voy_logo_full_animaiton.mp4": "loop",
+    },
+    "kettle-logo-animation": {
+        "me_at_kettle_1.mp4": "loop",
+        "kettle_socials.mp4": "loop",
+    },
+    "interncan-explainer-video": {
+        "Interncan_Explainer_Video.mp4": "player",
+    },
+    "widget-concepts-for-nothingos": {
+        "all_together.mp4": "player",
+    },
+}
+
+
 def placeholder(kind, name):
     label = "Video coming soon" if kind == "video" else "File coming soon"
     comment = "video" if kind == "video" else "file"
@@ -128,6 +147,19 @@ def placeholder(kind, name):
         f"<!-- replace with {comment}: {esc(name)} -->"
         f"</div>"
     )
+
+
+def video_block(kind, name, slug):
+    mode = AVAILABLE_VIDEOS.get(slug, {}).get(name) if kind == "video" else None
+    path = ROOT / "media" / slug / name
+    if not mode or not path.is_file():
+        return placeholder(kind, name)
+    src = f"../../media/{slug}/{name}"
+    if mode == "loop":
+        attrs = 'autoplay muted loop playsinline preload="metadata"'
+    else:
+        attrs = 'controls playsinline preload="metadata"'
+    return f'<video class="player" {attrs} src="{esc(src)}"></video>'
 
 
 def embed_youtube(url, title):
@@ -192,7 +224,7 @@ def render_body(page, by_notion, by_slug, cards_html):
             continue
         unavail = UNAVAIL_RE.match(raw)
         if unavail:
-            chunks.append(placeholder(unavail.group(1), unavail.group(2)))
+            chunks.append(video_block(unavail.group(1), unavail.group(2), page["slug"]))
             i += 1
             continue
         if UNRENDERED_RE.match(raw):
