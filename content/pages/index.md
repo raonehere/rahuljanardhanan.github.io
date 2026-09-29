@@ -52,6 +52,6 @@ cover: null
 - [Mini Documentaries](mini-documentaries.md)
 
 ## Connect with me
-- Email: bjrahul7@gmail.com
+- Email: rahul.janardhanan.here@gmail.com
 - Instagram: https://instagram.com/rahul.janar.dhanan
 - X: https://x.com/raonehere
