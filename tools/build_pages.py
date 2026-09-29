@@ -289,7 +289,8 @@ def link_line(url):
 def image_tag(src, alt, lazy=True):
     loading = ' loading="lazy"' if lazy else ""
     return (
-        f'<figure class="figure"><img src="{esc(src)}" alt="{esc(alt)}"{loading}></figure>'
+        f'<figure class="figure"><a href="{esc(src)}" target="_blank" rel="noopener noreferrer">'
+        f'<img src="{esc(src)}" alt="{esc(alt)}"{loading}></a></figure>'
     )
 
 
@@ -342,13 +343,31 @@ def render_body(page, by_notion, by_slug, cards_html):
             continue
         img = IMG_RE.fullmatch(raw)
         if img:
-            src = media_src(img.group(2))
-            alt = img.group(1).strip() or page["title"]
-            if src:
-                chunks.append(image_tag(src, alt))
-            else:
-                chunks.append(f"<!-- missing image: {esc(img.group(2))} -->")
-            i += 1
+            group = []
+            while i < len(lines):
+                line = lines[i].strip()
+                if not line:
+                    nxt = i + 1
+                    while nxt < len(lines) and not lines[nxt].strip():
+                        nxt += 1
+                    if nxt < len(lines) and IMG_RE.fullmatch(lines[nxt].strip()):
+                        i = nxt
+                        continue
+                    break
+                grouped = IMG_RE.fullmatch(line)
+                if not grouped:
+                    break
+                src = media_src(grouped.group(2))
+                alt = grouped.group(1).strip() or page["title"]
+                if src:
+                    group.append(image_tag(src, alt))
+                else:
+                    group.append(f"<!-- missing image: {esc(grouped.group(2))} -->")
+                i += 1
+            if len(group) > 1:
+                chunks.append('<div class="gallery">' + "".join(group) + "</div>")
+            elif group:
+                chunks.append(group[0])
             continue
         if raw.startswith("- "):
             items = []
