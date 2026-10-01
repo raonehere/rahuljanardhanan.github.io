@@ -42,20 +42,30 @@ ul{margin:0;padding:0;list-style:none}
 .h3{font:400 24px/32px var(--f-head);text-transform:uppercase;letter-spacing:.06em;margin:18px 0 8px}
 .h4{font:400 18px/24px var(--f-head);text-transform:uppercase;letter-spacing:.1em;margin:0 0 12px}
 
-/* ---------- Header (Figma: links at y111, logo 117×82 at y88) ---------- */
+/* ---------- Header ----------
+   Gaps are the visible ink-to-ink distance, not the CSS boxes.
+   Letter-spacing leaves empty space after the last glyph, and each
+   letter has its own side bearing. Those insets (in em, measured from
+   the rendered Oswald Light at 180px) are subtracted so every pair
+   — Contact–Book, Book–logo, logo–Gallery, Gallery–Instagram —
+   shows the same gap. The logo art fills its SVG, so its box edge is the ink.
+   Desktop type stays Oswald Light 24px / 0.1em (2.4px). */
 .site-header{max-width:1440px;margin:0 auto;padding:88px 0 0}
-.nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:start}
-.nav__group{margin-top:23px}
-.nav__group{display:flex;gap:0}
-.nav__group a{font:300 24px/36px var(--f-head);letter-spacing:2.4px;text-transform:uppercase;text-decoration:none;
+.nav{--vgap:clamp(12px,5.8vw,88px);
+  display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:start;column-gap:0}
+.nav__group{display:flex;align-items:center;margin:23px 0 0;min-width:0;
+  font:300 24px/36px var(--f-head);letter-spacing:.1em}
+.nav__group--left{justify-content:flex-end;gap:calc(var(--vgap) - 0.1209em - 0.0694em)}
+.nav__group--right{justify-content:flex-start;gap:calc(var(--vgap) - 0.1216em - 0.0722em)}
+.nav__group li{margin:0}
+.nav__group--left li:last-child{margin-right:calc(var(--vgap) - 0.1056em)}
+.nav__group--right li:first-child{margin-left:calc(var(--vgap) - 0.0556em)}
+.nav__group a{font:inherit;letter-spacing:inherit;text-transform:uppercase;text-decoration:none;
+  display:inline-block;white-space:nowrap;
   background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .25s}
 .nav__group a:hover{background-size:100% 1px}
-.nav__group--left{justify-content:flex-end}
-.nav__group--left li:first-child{margin-right:83px}   /* CONTACT 243 → BOOK 424 */
-.nav__group--left li:last-child{margin-right:180px}   /* BOOK → logo */
-.nav__group--right li:first-child{margin-left:119px}  /* logo → GALLERY 898 */
-.nav__group--right li:last-child{margin-left:81px}    /* GALLERY → INSTAGRAM 1071 */
-.nav__logo img{width:117px;height:auto}
+.nav__logo{display:block}
+.nav__logo img{width:117px;height:auto;display:block}
 
 /* ---------- Buttons (Figma components 2024:71 / 2024:124) ---------- */
 .btn{display:inline-flex;align-items:center;justify-content:center;padding:0 30px;
@@ -141,10 +151,6 @@ details p{margin:0;padding:0 20px 20px;font-size:17px;line-height:28px}
 /* ---------- Tablet ---------- */
 @media (max-width:1280px){
   :root{--pad-l:6vw;--pad-r:6vw}
-  .nav__group--left li:first-child,.nav__group--right li:last-child{margin:0 0 0 0}
-  .nav__group{gap:4vw}
-  .nav__group--left li:last-child{margin-right:8vw}
-  .nav__group--right li:first-child{margin-left:8vw}
   .about{padding-left:var(--pad-l);column-gap:6vw}
   .reach{column-gap:6vw}
   .stays__grid{grid-template-columns:repeat(2,1fr)}
@@ -175,23 +181,10 @@ details p{margin:0;padding:0 20px 20px;font-size:17px;line-height:28px}
   .footer__mark{width:90px;grid-column:1/-1}
 }
 
-/* Phones and small tablets. Equal columns keep the logo on the center line.
-   Outer links sit on the padded edges; Book and Gallery sit in toward the logo.
-   Desktop (the base rules above 1280px, and the tablet spacing from 841px) is unchanged.
-   Letter-spacing stays 0.1em, the same ratio as 2.4px on the 24px desktop type. */
+/* Same optical gaps on small screens; only the type size and logo scale down. */
 @media (max-width:840px){
   .site-header{padding-left:clamp(16px,4vw,28px);padding-right:clamp(16px,4vw,28px)}
-  .nav{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;
-    column-gap:clamp(8px,2vw,18px)}
-  .nav__group{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;
-    gap:clamp(8px,2vw,16px);margin:0;min-width:0}
-  .nav__group li{min-width:0;margin:0}
-  .nav__group--left li:first-child,.nav__group--right li:last-child{margin:0;justify-self:start}
-  .nav__group--right li:last-child{justify-self:end}
-  .nav__group--left li:last-child,.nav__group--right li:first-child{margin:0}
-  .nav__group--left li:last-child{justify-self:end}
-  .nav__group--right li:first-child{justify-self:start}
-  .nav__group a{display:inline-block;white-space:nowrap;font-weight:300;
-    font-size:clamp(11px,2vw + 4.6px,16px);line-height:1.35;letter-spacing:.1em}
-  .nav__logo img{width:clamp(36px,11vw,64px);height:auto}
+  .nav{align-items:center}
+  .nav__group{margin-top:0;font-size:clamp(11px,2vw + 4.6px,16px);line-height:1.35}
+  .nav__logo img{width:clamp(36px,11vw,64px)}
 }
