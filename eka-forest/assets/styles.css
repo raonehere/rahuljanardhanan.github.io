@@ -154,13 +154,7 @@ details p{margin:0;padding:0 20px 20px;font-size:17px;line-height:28px}
   :root{--pad-l:22px;--pad-r:22px;--radius:20px}
   body{font-size:16px;line-height:26px}
   .h2{font-size:32px;line-height:40px}
-  .site-header{padding:28px 14px 0}
-  .nav{align-items:center}.nav__group{margin-top:0}
-  .nav__group{gap:16px}
-  .nav__group a{font-size:14px;line-height:24px;letter-spacing:1.4px}
-  .nav__group--left li:last-child{margin-right:16px}
-  .nav__group--right li:first-child{margin-left:16px}
-  .nav__logo img{width:58px}
+  .site-header{padding-top:28px}
   .about,.reach{grid-template-columns:1fr;row-gap:28px;padding-top:56px}
   .about__text .h2{margin-bottom:20px}
   .about__text p{margin-bottom:18px}
@@ -180,4 +174,24 @@ details p{margin:0;padding:0 20px 20px;font-size:17px;line-height:28px}
   .wa-float{width:46px;height:46px;right:14px;bottom:14px}
   .footer__mark{width:90px;grid-column:1/-1}
 }
-@media (max-width:360px){.nav__group{gap:10px}.nav__group a{font-size:12.5px;letter-spacing:1px}}
+
+/* Phones and small tablets. Equal columns keep the logo on the center line.
+   Outer links sit on the padded edges; Book and Gallery sit in toward the logo.
+   Desktop (the base rules above 1280px, and the tablet spacing from 841px) is unchanged.
+   Letter-spacing stays 0.1em, the same ratio as 2.4px on the 24px desktop type. */
+@media (max-width:840px){
+  .site-header{padding-left:clamp(16px,4vw,28px);padding-right:clamp(16px,4vw,28px)}
+  .nav{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;
+    column-gap:clamp(8px,2vw,18px)}
+  .nav__group{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;
+    gap:clamp(8px,2vw,16px);margin:0;min-width:0}
+  .nav__group li{min-width:0;margin:0}
+  .nav__group--left li:first-child,.nav__group--right li:last-child{margin:0;justify-self:start}
+  .nav__group--right li:last-child{justify-self:end}
+  .nav__group--left li:last-child,.nav__group--right li:first-child{margin:0}
+  .nav__group--left li:last-child{justify-self:end}
+  .nav__group--right li:first-child{justify-self:start}
+  .nav__group a{display:inline-block;white-space:nowrap;font-weight:300;
+    font-size:clamp(11px,2vw + 4.6px,16px);line-height:1.35;letter-spacing:.1em}
+  .nav__logo img{width:clamp(36px,11vw,64px);height:auto}
+}
