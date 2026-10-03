@@ -8,6 +8,7 @@ notion_id: "3c3da38f3c074b03b5db845092306e3d"
 cover: null
 unavailable_media: []
 ---
+
 # Thumbnail Design
 
 - [Roddys Reviews](roddys-reviews.md)

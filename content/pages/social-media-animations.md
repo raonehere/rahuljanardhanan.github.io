@@ -8,9 +8,10 @@ notion_id: "82a227540f84481690e00186b99619d5"
 cover: null
 unavailable_media: []
 ---
+
 # Social Media Animations
 
-- [Tacobell / Reels](tacobell-reels.md) (cross-link; page lives under Shorts)
+- [Tacobell / Reels](tacobell-reels.md)
 - [Rajakumari Porductions](rajakumari-productions.md)
 - [Subco / Mario Animation Reel](subco-mario-animation-reel.md)
 - [Avees Puttu House / Announcement Animation](avees-puttu-house-announcement-animation.md)

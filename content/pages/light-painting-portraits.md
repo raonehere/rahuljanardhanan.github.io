@@ -8,6 +8,7 @@ notion_id: "3b61ebec8b0c4f2c8f29bcc4bbad6b96"
 cover: null
 unavailable_media: []
 ---
+
 # Light Painting Portraits
 
 I've always been fascinated by light painting photography. Its surreal effects excite me a lot. I use these effects in my portrait photography to add depth and emotion. Recently, I shared some of my experiments on Instagram.

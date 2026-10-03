@@ -10,6 +10,7 @@ unavailable_media: []
 notion_unknown_blocks:
   - "20f4ccd1-7b44-80f7-a8af-d093aefa806f (tweet); 20f4ccd17b44801fb944e1120f3bfcbe (bookmark)"
 ---
+
 # Snake Widget for NothingOS
 
 Back in January 2024, I was playing around with a fun [**design exploration project**](/f984cf9f7fba421a812d28df9a402447?pvs=25). Just imagining what playful, useful widgets could look like on Nothing OS. One of the ideas I came up with was a tiny home screen version of the classic **Snake game.**
@@ -21,6 +22,5 @@ By December, the **Snake widget** launched inside the [Nothing Community Widgets
 ![](../media/snake-widget-for-nothingos/02.jpg)
 ![](../media/snake-widget-for-nothingos/03.png)
 This was one of my first times collaborating directly with a tech company on a public release, and I’m proud to have contributed both the concept and the visual design.
-
-Know more: 
+Know more:
 *[Unrendered Notion bookmark block, id 20f4ccd17b44801fb944e1120f3bfcbe]*

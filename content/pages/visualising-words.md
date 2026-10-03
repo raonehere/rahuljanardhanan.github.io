@@ -8,6 +8,7 @@ notion_id: "9755af38517c4c53bb75f41e3143a4ab"
 cover: null
 unavailable_media: []
 ---
+
 # Visualising Words
 
 This project stands out as one of my favorites among the animations I've created. Its goal is to bring quotes to life through visually captivating and emotionally stirring animation. The series consists of three distinct animations, each exploring a unique artistic style.

@@ -8,6 +8,7 @@ notion_id: "93f6032498884bfe970ec9565bc8feba"
 cover: null
 unavailable_media: []
 ---
+
 # Logo Animation
 
 - [Kettle / Logo Animation](kettle-logo-animation.md)

@@ -8,6 +8,7 @@ notion_id: "e87ca23f0fa646519e7210310ff1f169"
 cover: null
 unavailable_media: []
 ---
+
 # Infographics
 
 ## Infographics for Deloitte

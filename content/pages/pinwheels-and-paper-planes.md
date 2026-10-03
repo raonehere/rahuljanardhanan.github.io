@@ -8,6 +8,7 @@ notion_id: "046effb086834387a4a2163e8a88a832"
 cover: null
 unavailable_media: []
 ---
+
 # Pinwheels and Paper Planes
 
 ![](../media/pinwheels-and-paper-planes/01.jpg)
@@ -16,7 +17,7 @@ Pinwheels and Paper Planes" is a brand tailored for children, aiming to immerse 
 ![](../media/pinwheels-and-paper-planes/03.png)
 ![](../media/pinwheels-and-paper-planes/04.png)
 ![](../media/pinwheels-and-paper-planes/05.png)
-<mention-page id="25e8e800b98a48f5bcc1d51860f39950" title="Pinwheels & Paper Planes / logo Animation"/>
----
+- [Pinwheels & Paper Planes / logo Animation](pinwheels-paper-planes-logo-animation.md)
+
 Checkout the socials of Pinwheel and Paper Planes.
 *[Unrendered Notion bookmark block, id 8c0b07aafcc24824a1299311548a45f8]*

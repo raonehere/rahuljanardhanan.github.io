@@ -8,6 +8,7 @@ notion_id: "5dde059283114753b07d251874ada4af"
 cover: null
 unavailable_media: []
 ---
+
 # Nothing.tech / Reels
 
 The **Nothing Phone (2a) Community Edition** was a special project by the Nothing community. a creative celebration of community spirit through a unique variant of the Phone (2a). It turned out to be a huge success.

@@ -10,6 +10,7 @@ unavailable_media: []
 notion_unknown_blocks:
   - "20f4ccd1-7b44-81cb-9e85-fd91f5f3a30d (tweet)"
 ---
+
 # Nothing Flat-lay Photography Challenge
 
 This was a fun contest I took part in, which happened on Nothing.tech's Discord channel. The premise, as the title says, was to create a flat lay photograph that includes a Nothing product. Without any hesitation, I said yes to the challenge, and this is the image I made.

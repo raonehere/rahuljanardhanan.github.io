@@ -8,6 +8,7 @@ notion_id: "20f4ccd17b4480b0b1e1f39a85503723"
 cover: null
 unavailable_media: []
 ---
+
 # DUNKIN - Animated Reel
 
 Got the chance to create three animated shorts/reels for Dunkin’ Dubai through an agency. The challenge? Deliver all of them within just two days. Glad I could pull it off without compromising on quality.

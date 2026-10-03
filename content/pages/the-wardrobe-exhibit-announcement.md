@@ -8,6 +8,7 @@ notion_id: "7ae827c83d90424faee4c24630eba684"
 cover: null
 unavailable_media: []
 ---
+
 # The Wardrobe, Exhibit Announcement
 
 ![](../media/the-wardrobe-exhibit-announcement/01.jpg)

@@ -8,6 +8,7 @@ notion_id: "25e8e800b98a48f5bcc1d51860f39950"
 cover: null
 unavailable_media: []
 ---
+
 # Pinwheels & Paper Planes / logo Animation
 
 Pinwheels and Paper Planes" is a brand tailored for children, aiming to immerse them in the world of stories through guided book reading sessions and events crafted to foster learning and growth. The brand approached me with the concept of designing a lively and imaginative logo that encapsulates its vibrant spirit. and here is the outcome

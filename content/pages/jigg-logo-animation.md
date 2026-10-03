@@ -8,6 +8,7 @@ notion_id: "4cfbd4a1c5f8467c88175cc38c9fdd51"
 cover: null
 unavailable_media: []
 ---
+
 # Jigg / Logo Animation
 
 Jigg is an Australia-based fishing lure brand that reached out to me to create the logo and animation. It was a unique and fun project to work on.
