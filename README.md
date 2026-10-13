@@ -29,20 +29,23 @@ python3 tools/notion_sync.py --dry-run   # show what would change
 python3 tools/notion_sync.py --apply     # write pages, fetch new media, rebuild HTML
 ```
 
-Without a token, the sync reads the public page. New videos are compressed with ffmpeg (`scale` to at most 1280px wide, H.264 CRF 28, AAC 96k, faststart). Files already on disk are left alone until the Notion block changes.
+When `NOTION_TOKEN` is set, every request goes to the official API at `api.notion.com` (with the `Notion-Version` header). File links come back on those blocks. Public `notion.so` endpoints are used only when the token is unset. Those public calls are rate limited and have been returning HTTP 429.
 
-GitHub Actions runs the same command every day at 06:00 UTC and whenever you start **Sync portfolio from Notion** from the Actions tab. If anything changed, it commits to `main`, and GitHub Pages republishes.
+HTTP 429 and 5xx responses are retried up to 6 times with exponential backoff and jitter. A `Retry-After` header is honored. There is a short pause between page fetches.
 
-The workflow needs permission to push to `main`.
+New videos are compressed with ffmpeg (`scale` to at most 1280px wide, H.264 CRF 28, AAC 96k, faststart). Files already on disk are left alone until the Notion block changes.
 
-## Add NOTION_TOKEN (optional)
+GitHub Actions runs the same command every day at 06:00 UTC and whenever you start **Sync portfolio from Notion** from the Actions tab. The workflow passes the Actions secret `NOTION_TOKEN` into the script. If anything changed, it commits to `main`, and GitHub Pages republishes.
 
-The public endpoints are enough for the published portfolio. The official API is used only when `NOTION_TOKEN` is set.
+The workflow needs permission to push to `main`. The daily run stays reliable only after the secret below is set. An empty secret falls back to the public endpoints.
 
-1. Open [Notion integrations](https://www.notion.so/my-integrations) and create an internal integration.
-2. On the portfolio page, choose **Connections** and add that integration.
-3. In this GitHub repo, open **Settings → Secrets and variables → Actions** and add a secret named `NOTION_TOKEN` with the integration token.
-4. Run the **Sync portfolio from Notion** workflow, or export the secret locally and run `NOTION_TOKEN=secret python3 tools/notion_sync.py --apply`.
+## Add the NOTION_TOKEN secret
+
+1. Open [Notion integrations](https://www.notion.so/my-integrations) and create an internal integration. Copy its token (it starts with `ntn_` or `secret_`).
+2. Open the portfolio page **Rahul Janardhanan / Portfolio** (`6a818cbd-5bdb-4e19-9949-b0603267a09d`). Choose **Connections** (or the `…` menu → **Connect to**) and add that integration.
+3. Sharing that one page is enough. Notion gives the integration the page and every child page nested under it. This portfolio has no databases. Project and category pages are children of the root, so they do not need their own connection. A page that is only linked, and lives somewhere else in the workspace, would need to be shared separately.
+4. In this GitHub repo, open **Settings → Secrets and variables → Actions → New repository secret**. Name it exactly `NOTION_TOKEN` and paste the integration token.
+5. Run **Sync portfolio from Notion** from the Actions tab, or locally: `NOTION_TOKEN=secret python3 tools/notion_sync.py --apply`.
 
 ## Old project URLs
 

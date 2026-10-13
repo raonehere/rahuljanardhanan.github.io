@@ -24,7 +24,13 @@ jobs:
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           NOTION_SYNC_APPLY: "1"
-        run: python3 tools/notion_sync.py --apply
+        run: |
+          if [ -z "${NOTION_TOKEN}" ]; then
+            echo "NOTION_TOKEN is empty. Public Notion endpoints will be used and often return HTTP 429."
+          else
+            echo "NOTION_TOKEN is set. Using the official Notion API at api.notion.com."
+          fi
+          python3 tools/notion_sync.py --apply
       - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
