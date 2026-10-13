@@ -13,11 +13,15 @@ Then it runs tools/build_pages.py.
 import hashlib
 import json
 import os
+import random
 import re
 import subprocess
 import sys
+import time
 import urllib.error
 import urllib.request
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,6 +31,9 @@ STATE_PATH = ROOT / "content" / "notion-sync-state.json"
 LANDING = ROOT / "content" / "landing.md"
 ROOT_PAGE = "6a818cbd-5bdb-4e19-9949-b0603267a09d"
 NOTION_VERSION = "2022-06-28"
+# One try plus retries. 429 and 5xx back off; other status codes fail immediately.
+MAX_HTTP_ATTEMPTS = 6
+PAGE_FETCH_DELAY = 0.4
 
 
 def norm_id(value):
@@ -45,29 +52,88 @@ def unwrap(record):
     return value if isinstance(value, dict) else {}
 
 
+def notion_token():
+    return os.environ.get("NOTION_TOKEN", "").strip()
+
+
+def official_headers(token):
+    return {
+        "Authorization": f"Bearer {token}",
+        "Notion-Version": NOTION_VERSION,
+    }
+
+
+def parse_retry_after(value, now=None):
+    """Return a wait in seconds from a Retry-After header, or None."""
+    if value is None or str(value).strip() == "":
+        return None
+    text = str(value).strip()
+    try:
+        return max(0.0, float(text))
+    except ValueError:
+        pass
+    try:
+        when = parsedate_to_datetime(text)
+    except (TypeError, ValueError, IndexError):
+        return None
+    if when.tzinfo is None:
+        when = when.replace(tzinfo=timezone.utc)
+    current = now or datetime.now(timezone.utc)
+    return max(0.0, (when - current).total_seconds())
+
+
+def backoff_seconds(attempt, retry_after=None):
+    """Exponential backoff with jitter. Honor Retry-After when Notion sends one.
+
+    attempt is 0 for the first retry. Caps a single wait at 60 seconds.
+    """
+    if retry_after is not None:
+        base = min(60.0, max(0.0, float(retry_after)))
+        return base + random.random() * 0.25
+    base = min(60.0, 2 ** attempt)
+    return base + random.random() * base * 0.3
+
+
+def _retryable_status(code):
+    return code == 429 or 500 <= code <= 599
+
+
 def http_json(url, payload=None, headers=None):
-    import time
     data = None if payload is None else json.dumps(payload).encode()
     last_error = None
-    for attempt in range(6):
-        req = urllib.request.Request(url, data=data, headers=headers or {})
-        if payload is not None:
+    for attempt in range(MAX_HTTP_ATTEMPTS):
+        req = urllib.request.Request(url, data=data)
+        for key, value in (headers or {}).items():
+            req.add_header(key, value)
+        if payload is not None and not req.has_header("Content-type"):
             req.add_header("Content-Type", "application/json")
-        req.add_header("User-Agent", "Mozilla/5.0")
+        if not req.has_header("User-agent"):
+            req.add_header("User-Agent", "Mozilla/5.0")
         try:
             with urllib.request.urlopen(req, timeout=60) as response:
                 return json.loads(response.read().decode())
         except urllib.error.HTTPError as error:
             last_error = error
-            if error.code != 429:
+            try:
+                error.read()
+            except Exception:
+                pass
+            if not _retryable_status(error.code) or attempt == MAX_HTTP_ATTEMPTS - 1:
                 raise
-            time.sleep(2 + attempt * 2)
+            retry_after = None
+            if error.headers is not None:
+                retry_after = parse_retry_after(error.headers.get("Retry-After"))
+            wait = backoff_seconds(attempt, retry_after)
+            print(
+                f"HTTP {error.code} from {url.split('?')[0]} ; retry {attempt + 1} in {wait:.1f}s",
+                file=sys.stderr,
+            )
+            time.sleep(wait)
     raise last_error
 
 
 def load_public_chunks(page_id):
-    import time
-    time.sleep(0.15)
+    time.sleep(PAGE_FETCH_DELAY)
     blocks = {}
     for number in range(0, 6):
         data = http_json(
@@ -335,7 +401,20 @@ def normalize(text):
 
 
 def signed_url(block):
+    """Resolve a file URL. Official API when NOTION_TOKEN is set; public only otherwise."""
     url = source_url(block)
+    token = notion_token()
+    if token:
+        if url.startswith("http"):
+            return url
+        data = http_json(
+            f"https://api.notion.com/v1/blocks/{block['id']}",
+            headers=official_headers(token),
+        )
+        kind = data.get("type")
+        payload = data.get(kind) or {}
+        file_info = payload.get("file") or payload.get("external") or {}
+        return file_info.get("url") or payload.get("url") or ""
     if not url:
         return ""
     if url.startswith("http"):
@@ -405,19 +484,14 @@ def fetch_official_tree(root_id, token):
     """Official API fallback shape is converted into the public block dict."""
 
     def get_children(block_id):
+        time.sleep(PAGE_FETCH_DELAY)
         results = []
         cursor = None
         while True:
             url = f"https://api.notion.com/v1/blocks/{block_id}/children?page_size=100"
             if cursor:
                 url += f"&start_cursor={cursor}"
-            data = http_json(
-                url,
-                headers={
-                    "Authorization": f"Bearer {token}",
-                    "Notion-Version": NOTION_VERSION,
-                },
-            )
+            data = http_json(url, headers=official_headers(token))
             results.extend(data.get("results") or [])
             if not data.get("has_more"):
                 break
@@ -491,13 +565,13 @@ def fetch_official_tree(root_id, token):
 
     root = http_json(
         f"https://api.notion.com/v1/blocks/{dashed(root_id)}",
-        headers={"Authorization": f"Bearer {token}", "Notion-Version": NOTION_VERSION},
+        headers=official_headers(token),
     )
     convert(root)
     # The block endpoint does not include the page title; read the page.
     page = http_json(
         f"https://api.notion.com/v1/pages/{dashed(root_id)}",
-        headers={"Authorization": f"Bearer {token}", "Notion-Version": NOTION_VERSION},
+        headers=official_headers(token),
     )
     title = ""
     props = page.get("properties") or {}
