@@ -547,6 +547,28 @@ def json_escape(value):
     return '"' + value.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
 
+def featured_item(raw):
+    # One "featured:" line: Name | Label | Description | Link=url ; Link=url
+    parts = [part.strip() for part in raw.split("|")]
+    parts += [""] * (4 - len(parts))
+    name, tag, about, raw_links = parts[:4]
+    if not name:
+        return None
+    links = []
+    image = ""
+    for chunk in raw_links.split(";"):
+        chunk = chunk.strip()
+        if "=" not in chunk:
+            continue
+        label, href = chunk.split("=", 1)
+        label, href = label.strip(), href.strip()
+        if label.lower() == "image":
+            image = href
+        elif label and href:
+            links.append((label, href))
+    return {"name": name, "tag": tag, "about": about, "links": links, "image": image}
+
+
 def landing_fields():
     text = LANDING_MD.read_text(encoding="utf-8") if LANDING_MD.exists() else ""
     if text.startswith("---"):
@@ -559,8 +581,15 @@ def landing_fields():
         "email": "rahul.janardhanan.here@gmail.com",
         "instagram": "https://instagram.com/rahul.janar.dhanan",
         "x": "https://x.com/raonehere",
+        "blog": "blog/",
     }
+    featured = []
     for line in fm.splitlines():
+        if line.startswith("featured:"):
+            item = featured_item(line.split(":", 1)[1])
+            if item:
+                featured.append(item)
+            continue
         if ":" not in line or line.startswith(" ") or line.startswith("#"):
             continue
         key, value = line.split(":", 1)
@@ -568,13 +597,85 @@ def landing_fields():
         value = value.strip().strip('"')
         if key in fields and value:
             fields[key] = value
-    return fields
+    return fields, featured
+
+
+def link_target(href):
+    if href.startswith("http"):
+        return ' target="_blank" rel="noopener noreferrer"'
+    return ""
+
+
+def featured_html(featured):
+    if not featured:
+        return ""
+    cards = []
+    for item in featured:
+        name = esc(item["name"])
+        links = item["links"]
+        if links:
+            href = links[0][1]
+            heading = f'<a href="{esc(href)}"{link_target(href)}>{name}</a>'
+        else:
+            heading = name
+        if item.get("image"):
+            media = (
+                f'<div class="feature-media">'
+                f'<img src="{esc(item["image"])}" alt="{name}">'
+                f"</div>"
+            )
+        else:
+            media = (
+                '<div class="feature-media" aria-hidden="true">'
+                "<span>Photo</span>"
+                "</div>"
+            )
+        body = []
+        if item["tag"]:
+            body.append(f'<p class="feature-tag">{esc(item["tag"])}</p>')
+        body.append(f"<h3>{heading}</h3>")
+        if item["about"]:
+            body.append(f'<p class="feature-about">{esc(item["about"])}</p>')
+        if links:
+            anchors = "".join(
+                f'<a href="{esc(href)}"{link_target(href)}>{esc(label)}</a>'
+                for label, href in links
+            )
+            body.append(f'<p class="feature-links">{anchors}</p>')
+        lines = [
+            '<article class="feature-card">',
+            f"  {media}",
+            '  <div class="feature-body">',
+            *["    " + line for line in body],
+            "  </div>",
+            "</article>",
+        ]
+        cards.append("\n".join("      " + line for line in lines))
+    body = "\n".join(cards)
+    return f"""  <section class="landing-featured" aria-labelledby="featured-heading">
+    <h2 id="featured-heading">Featured</h2>
+    <div class="feature-list">
+{body}
+    </div>
+  </section>
+"""
 
 
 def write_landing():
     # Copy lives in content/landing.md so it is easy to edit.
-    fields = landing_fields()
+    fields, featured = landing_fields()
     email = fields["email"]
+    blog = fields.get("blog", "").strip()
+    blog_button = (
+        f'\n        <a class="landing-blog" href="{esc(blog)}">Blog</a>'
+        if blog
+        else ""
+    )
+    featured_block = featured_html(featured)
+    if featured_block:
+        featured_block = "".join(
+            "    " + line for line in featured_block.splitlines(keepends=True)
+        )
     doc = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -590,18 +691,20 @@ def write_landing():
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="landing" id="top">
-  <!-- Landing copy: edit content/landing.md (title, intro, email, instagram, x). -->
+  <!-- Landing copy: edit content/landing.md (title, intro, email, instagram, x, blog, featured). -->
   <main class="landing-wrap">
     <div class="shell landing-main">
       <h1>{esc(fields["title"])}</h1>
       <p class="landing-intro">{esc(fields["intro"])}</p>
-      <p class="landing-actions"><a class="landing-portfolio" href="portfolio/">Portfolio</a></p>
+      <p class="landing-actions">
+        <a class="landing-portfolio" href="portfolio/">Portfolio</a>{blog_button}
+      </p>
       <ul class="landing-links">
         <li><a href="mailto:{esc(email)}">{esc(email)}</a></li>
         <li><a href="{esc(fields["instagram"])}" target="_blank" rel="noopener noreferrer">Instagram</a></li>
         <li><a href="{esc(fields["x"])}" target="_blank" rel="noopener noreferrer">X</a></li>
       </ul>
-    </div>
+{featured_block}    </div>
   </main>
 </body>
 </html>
