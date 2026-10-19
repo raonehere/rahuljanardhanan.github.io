@@ -582,6 +582,7 @@ def landing_fields():
         "instagram": "https://instagram.com/rahul.janar.dhanan",
         "x": "https://x.com/raonehere",
         "blog": "blog/",
+        "photography": "photography/",
     }
     featured = []
     for line in fm.splitlines():
@@ -666,8 +667,14 @@ def write_landing():
     fields, featured = landing_fields()
     email = fields["email"]
     blog = fields.get("blog", "").strip()
+    photography = fields.get("photography", "").strip()
+    photography_button = (
+        f'\n        <a class="landing-secondary" href="{esc(photography)}">Photography</a>'
+        if photography
+        else ""
+    )
     blog_button = (
-        f'\n        <a class="landing-blog" href="{esc(blog)}">Blog</a>'
+        f'\n        <a class="landing-secondary" href="{esc(blog)}">Blog</a>'
         if blog
         else ""
     )
@@ -697,7 +704,7 @@ def write_landing():
       <h1>{esc(fields["title"])}</h1>
       <p class="landing-intro">{esc(fields["intro"])}</p>
       <p class="landing-actions">
-        <a class="landing-portfolio" href="portfolio/">Portfolio</a>{blog_button}
+        <a class="landing-portfolio" href="portfolio/">Portfolio</a>{photography_button}{blog_button}
       </p>
       <ul class="landing-links">
         <li><a href="mailto:{esc(email)}">{esc(email)}</a></li>

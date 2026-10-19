@@ -11,5 +11,6 @@ email: rahul.janardhanan.here@gmail.com
 instagram: https://instagram.com/rahul.janar.dhanan
 x: https://x.com/raonehere
 blog: blog/
+photography: photography/
 featured: Glyph Lab | Android app by Vimanam Studio | Home screen widgets and Glyph Matrix toys for Nothing phones. Music player, system info, Walkie Talkie, Glyph Snake, and more. | Get it on Google Play=https://play.google.com/store/apps/details?id=com.projectkriya.glyphlab ; Walkie Talkie page=walkie/ ; Read the post=blog/glyph-lab/
 ---
