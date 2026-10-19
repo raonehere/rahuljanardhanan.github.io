@@ -577,7 +577,7 @@ def landing_fields():
         fm = text
     fields = {
         "title": "Rahul Janardhanan",
-        "intro": "Designer, animator, video & photo.",
+        "intro": "Visual artist.",
         "email": "rahul.janardhanan.here@gmail.com",
         "instagram": "https://instagram.com/rahul.janar.dhanan",
         "x": "https://x.com/raonehere",

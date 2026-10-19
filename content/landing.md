@@ -6,7 +6,7 @@
 # Optional photo: add image=path/to/photo.jpg inside the links list, e.g. image=assets/photo.jpg ; Get it on Play=https://...
 # With no image, the card shows an empty photo placeholder.
 title: Rahul Janardhanan
-intro: Designer, animator, video & photo.
+intro: Visual artist.
 email: rahul.janardhanan.here@gmail.com
 instagram: https://instagram.com/rahul.janar.dhanan
 x: https://x.com/raonehere
