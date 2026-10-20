@@ -752,12 +752,12 @@ def write_landing():
     <div class="shell landing-main">
       <h1>{esc(fields["title"])}</h1>
       <p class="landing-intro">{esc(fields["intro"])}</p>
-{shortcuts_html}      <ul class="landing-social">
+{shortcuts_html}{featured_block}      <ul class="landing-social">
         <li><a href="mailto:{esc(email)}" aria-label="Email">{ICON_MAIL}</a></li>
         <li><a href="{esc(fields["instagram"])}" target="_blank" rel="noopener noreferrer" aria-label="Instagram">{ICON_INSTAGRAM}</a></li>
         <li><a href="{esc(fields["x"])}" target="_blank" rel="noopener noreferrer" aria-label="X">{ICON_X}</a></li>
       </ul>
-{featured_block}    </div>
+    </div>
   </main>
 </body>
 </html>

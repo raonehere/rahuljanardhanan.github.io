@@ -840,25 +840,21 @@ a.card-link:hover h2 {
 
 .landing-social {
   display: flex;
-  gap: 10px;
-  margin-top: 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  margin-top: 72px;
   padding: 0;
   list-style: none;
 }
 
 .landing-social a {
-  display: grid;
-  place-items: center;
-  width: 42px;
-  height: 42px;
-  border: 1px solid #2a2a2a;
-  border-radius: 999px;
+  display: inline-flex;
   color: var(--muted);
 }
 
 .landing-social a:hover {
   color: var(--text);
-  border-color: #4a4a4a;
 }
 
 .landing-social .icon {
