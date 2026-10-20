@@ -12,6 +12,16 @@ python3 tools/build_pages.py
 
 The intro line is based on the portfolio wording Design, Animation, Video, and Photo.
 
+## Add or reorder photography
+
+The photography page is built from `content/photography.json`. The order of the `photos` list is the order on the page. Each photo has an image path, alt text, caption, and optional link.
+
+```bash
+python3 tools/build_photography.py --list       # show the current order
+python3 tools/build_photography.py --move 4 1   # move item 4 to the top
+python3 tools/build_photography.py              # rebuild the page
+```
+
 ## Edit the portfolio in Notion
 
 The source page is [Rahul Janardhanan / Portfolio](https://raonehere.notion.site/Rahul-Janardhanan-Portfolio-6a818cbd5bdb4e199949b0603267a09d).

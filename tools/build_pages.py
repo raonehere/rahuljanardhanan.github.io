@@ -19,6 +19,26 @@ REDIRECT_DIR = ROOT / "projects"
 ASSET_PREFIX = "../../../"
 SITE = "https://rahuljanardhanan.com"
 
+ICON_MAIL = (
+    '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+    'stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" '
+    'aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/>'
+    '<path d="m3 7 9 6 9-6"/></svg>'
+)
+ICON_INSTAGRAM = (
+    '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+    'stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" '
+    'aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/>'
+    '<circle cx="12" cy="12" r="4"/>'
+    '<circle cx="17.3" cy="6.7" r="0.6" fill="currentColor" stroke="none"/></svg>'
+)
+ICON_X = (
+    '<svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">'
+    '<path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.22-6.82-5.97 6.82'
+    'H1.67l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23Zm-1.16 17.52h1.83'
+    'L7.08 4.13H5.12l11.96 15.64Z"/></svg>'
+)
+
 LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 BOLD_RE = re.compile(r"\*\*(.+?)\*\*")
 IMG_RE = re.compile(r"!\[([^\]]*)\]\(([^)]+)\)")
@@ -585,11 +605,20 @@ def landing_fields():
         "photography": "photography/",
     }
     featured = []
+    shortcuts = []
     for line in fm.splitlines():
         if line.startswith("featured:"):
             item = featured_item(line.split(":", 1)[1])
             if item:
                 featured.append(item)
+            continue
+        if line.startswith("shortcuts:"):
+            raw = line.split(":", 1)[1]
+            if "|" in raw:
+                label, href = raw.split("|", 1)
+                label, href = label.strip(), href.strip()
+                if label and href:
+                    shortcuts.append((label, href))
             continue
         if ":" not in line or line.startswith(" ") or line.startswith("#"):
             continue
@@ -598,7 +627,7 @@ def landing_fields():
         value = value.strip().strip('"')
         if key in fields and value:
             fields[key] = value
-    return fields, featured
+    return fields, featured, shortcuts
 
 
 def link_target(href):
@@ -664,20 +693,30 @@ def featured_html(featured):
 
 def write_landing():
     # Copy lives in content/landing.md so it is easy to edit.
-    fields, featured = landing_fields()
+    fields, featured, shortcuts = landing_fields()
     email = fields["email"]
     blog = fields.get("blog", "").strip()
     photography = fields.get("photography", "").strip()
-    photography_button = (
-        f'\n        <a class="landing-secondary" href="{esc(photography)}">Photography</a>'
-        if photography
-        else ""
-    )
-    blog_button = (
-        f'\n        <a class="landing-secondary" href="{esc(blog)}">Blog</a>'
-        if blog
-        else ""
-    )
+
+    nav = ['<a href="portfolio/">Portfolio</a>']
+    if photography:
+        nav.append(f'<a href="{esc(photography)}">Photography</a>')
+    if blog:
+        nav.append(f'<a href="{esc(blog)}">Blog</a>')
+    nav_html = "\n        ".join(nav)
+
+    if shortcuts:
+        pills = "\n          ".join(
+            f'<a href="{esc(href)}"{link_target(href)}>{esc(label)}</a>'
+            for label, href in shortcuts
+        )
+        shortcuts_html = f"""      <nav class="landing-shortcuts" aria-label="Shortcuts">
+          {pills}
+      </nav>
+"""
+    else:
+        shortcuts_html = ""
+
     featured_block = featured_html(featured)
     if featured_block:
         featured_block = "".join(
@@ -698,18 +737,25 @@ def write_landing():
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="landing" id="top">
-  <!-- Landing copy: edit content/landing.md (title, intro, email, instagram, x, blog, featured). -->
-  <main class="landing-wrap">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="#top">{esc(fields["title"])}</a>
+      <nav class="header-nav" aria-label="Main">
+        {nav_html}
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="landing-wrap">
     <div class="shell landing-main">
       <h1>{esc(fields["title"])}</h1>
       <p class="landing-intro">{esc(fields["intro"])}</p>
-      <p class="landing-actions">
-        <a class="landing-portfolio" href="portfolio/">Portfolio</a>{photography_button}{blog_button}
-      </p>
-      <ul class="landing-links">
-        <li><a href="mailto:{esc(email)}">{esc(email)}</a></li>
-        <li><a href="{esc(fields["instagram"])}" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-        <li><a href="{esc(fields["x"])}" target="_blank" rel="noopener noreferrer">X</a></li>
+{shortcuts_html}      <ul class="landing-social">
+        <li><a href="mailto:{esc(email)}" aria-label="Email">{ICON_MAIL}</a></li>
+        <li><a href="{esc(fields["instagram"])}" target="_blank" rel="noopener noreferrer" aria-label="Instagram">{ICON_INSTAGRAM}</a></li>
+        <li><a href="{esc(fields["x"])}" target="_blank" rel="noopener noreferrer" aria-label="X">{ICON_X}</a></li>
       </ul>
 {featured_block}    </div>
   </main>
