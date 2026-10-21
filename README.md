@@ -30,6 +30,22 @@ Change text, add a project, or replace an image or video there. The designed por
 
 A Notion subpage titled **Landing** or **About** can override the landing intro the next time a sync runs. If that page does not exist, `content/landing.md` stays in charge.
 
+## Blog and photography in Notion
+
+Both are optional. If the matching page is missing, the local files stay in charge.
+
+**Blog.** Add a page titled **Blog** under the portfolio page in Notion. Each child page becomes a post: the page title is the post title, the creation date is the post date, and the first paragraph becomes the list summary. The sync writes one Markdown file per post to `content/blog/` and rebuilds the blog.
+
+**Photography.** Add a page titled **Photography** under the portfolio page and put the photos in it as image blocks, in the order you want. Drag the blocks to reorder. The image caption becomes the tile caption. To make a tile link somewhere, end the caption with a vertical bar and the link:
+
+```text
+Light Painting | portfolio/projects/light-painting-portraits/
+```
+
+The sync downloads the images to `media/photography/` and rewrites `content/photography.json`.
+
+The sync is additive: deleting a post or photo in Notion does not delete the local copy. Remove the local file yourself if you want it gone.
+
 ## Sync Notion to the site
 
 From a checkout:

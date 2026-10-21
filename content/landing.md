@@ -17,6 +17,6 @@ shortcuts: Glyph Lab app | https://play.google.com/store/apps/details?id=com.pro
 shortcuts: Snake widget | portfolio/projects/snake-widget-for-nothingos/
 shortcuts: 10 widgets in 10 days | blog/ten-widgets-in-ten-days/
 shortcuts: 10 toys for Glyph Matrix | blog/ten-days-ten-toys/
-shortcuts: Walkie Talkie | walkie/
-featured: Glyph Lab | Android app by Vimanam Studio | Home screen widgets and Glyph Matrix toys for Nothing phones. Music player, system info, Walkie Talkie, Glyph Snake, and more. | Get it on Google Play=https://play.google.com/store/apps/details?id=com.projectkriya.glyphlab ; Walkie Talkie page=walkie/ ; Read the post=blog/glyph-lab/
+shortcuts: Walkie Talkie | walkie/connect/
+featured: Glyph Lab | Android app by Vimanam Studio | Home screen widgets and Glyph Matrix toys for Nothing phones. Music player, system info, Walkie Talkie, Glyph Snake, and more. | Get it on Google Play=https://play.google.com/store/apps/details?id=com.projectkriya.glyphlab ; Walkie Talkie page=walkie/connect/ ; Read the post=blog/glyph-lab/
 ---

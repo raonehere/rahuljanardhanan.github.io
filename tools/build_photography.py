@@ -36,21 +36,26 @@ def save(data):
     )
 
 
+def link_url(value):
+    value = (value or "").strip()
+    if value.startswith(("http://", "https://", "mailto:", "/", "#")):
+        return value
+    return "../" + value
+
+
 def photo_html(photo):
-    image = esc(photo["image"])
+    image = esc(link_url(photo["image"]))
     alt = esc(photo.get("alt", ""))
     caption = esc(photo.get("caption", ""))
     link = photo.get("link", "").strip()
     size = ""
     if photo.get("width") and photo.get("height"):
         size = f' width="{int(photo["width"])}" height="{int(photo["height"])}"'
-    inner = (
-        f'<img src="../{image}" alt="{alt}"{size} loading="lazy">\n'
-        f"            <span>{caption}</span>"
-    )
+    caption_html = f"\n            <span>{caption}</span>" if caption else ""
+    inner = f'<img src="{image}" alt="{alt}"{size} loading="lazy">{caption_html}'
     if link:
         return (
-            f'          <a class="photo-tile" href="../{esc(link)}">\n'
+            f'          <a class="photo-tile" href="{esc(link_url(link))}">\n'
             f"            {inner}\n"
             f"          </a>"
         )
@@ -151,7 +156,11 @@ def build(data):
 """
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(doc, encoding="utf-8")
-    print(f"wrote {OUT.relative_to(ROOT)} with {len(data['photos'])} photos")
+    try:
+        shown = OUT.relative_to(ROOT)
+    except ValueError:
+        shown = OUT
+    print(f"wrote {shown} with {len(data['photos'])} photos")
 
 
 def main():
