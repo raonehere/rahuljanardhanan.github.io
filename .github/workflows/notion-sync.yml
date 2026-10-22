@@ -1,4 +1,4 @@
-name: Sync portfolio from Notion
+name: Sync from Notion
 
 on:
   workflow_dispatch:

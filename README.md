@@ -24,7 +24,7 @@ python3 tools/build_photography.py              # rebuild the page
 
 ## Edit the portfolio in Notion
 
-The source page is [Rahul Janardhanan / Portfolio](https://raonehere.notion.site/Rahul-Janardhanan-Portfolio-6a818cbd5bdb4e199949b0603267a09d).
+The source page is [Website CMS](https://app.notion.com/p/4014ccd17b44810f98a6d5879f8e9dd0) (page ID `4014ccd1-7b44-810f-98a6-d5879f8e9dd0`). It is private; share it with the website's Notion integration. The portfolio projects live under **Portfolio** inside it.
 
 Change text, add a project, or replace an image or video there. The designed portfolio homepage (`portfolio/index.html`) is laid out by hand. Project and category pages are generated from `content/pages/`.
 
@@ -34,11 +34,11 @@ A Notion subpage titled **Landing** or **About** can override the landing intro 
 
 Both are optional. If the matching page is missing, the local files stay in charge.
 
-**Blog.** Add a page titled **Blog** under the portfolio page in Notion. Each child page becomes a post: the page title is the post title, the creation date is the post date, and the first paragraph becomes the list summary. The sync writes one Markdown file per post to `content/blog/` and rebuilds the blog.
+**Blog.** Add a page titled **Blog** inside Website CMS. Each child page becomes a post: the page title is the post title, the creation date is the post date, and the first paragraph becomes the list summary. The sync writes one Markdown file per post to `content/blog/` and rebuilds the blog.
 
 To backdate a post, make the first line of the page a paragraph like `Date: 2024-01-12`. The sync uses it and removes it from the published text.
 
-**Photography.** Add a page titled **Photography** under the portfolio page and put the photos in it as image blocks, in the order you want. Drag the blocks to reorder. The image caption becomes the tile caption. To make a tile link somewhere, end the caption with a vertical bar and the link:
+**Photography.** Add a page titled **Photography** inside Website CMS and put the photos in it as image blocks, in the order you want. Drag the blocks to reorder. The image caption becomes the tile caption. To make a tile link somewhere, end the caption with a vertical bar and the link:
 
 ```text
 Light Painting | portfolio/projects/light-painting-portraits/
@@ -48,9 +48,9 @@ The sync downloads the images to `media/photography/` and rewrites `content/phot
 
 The sync is additive: deleting a post or photo in Notion does not delete the local copy. Remove the local file yourself if you want it gone.
 
-### Separate CMS page
+### CMS page
 
-If the CMS pages live in their own Notion page instead of under the portfolio page, set the `NOTION_CMS_PAGE` environment variable (or the repository variable of the same name) to that page ID. The sync then reads both trees. Share the page with the same Notion integration.
+The sync reads Website CMS by default. To point it at a different page, set `NOTION_CMS_PAGE` (environment variable or repository variable) to that page ID. The sync also reads the old portfolio page, so links and headings there are harmless.
 
 ## Sync Notion to the site
 

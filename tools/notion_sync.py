@@ -32,9 +32,11 @@ LANDING = ROOT / "content" / "landing.md"
 BLOG_DIR = ROOT / "content" / "blog"
 PHOTO_DATA = ROOT / "content" / "photography.json"
 ROOT_PAGE = "6a818cbd-5bdb-4e19-9949-b0603267a09d"
-# Optional separate page that holds the website CMS (Portfolio, Blog,
-# Photography). Set NOTION_CMS_PAGE to its page ID.
-CMS_PAGE = os.environ.get("NOTION_CMS_PAGE", "").strip()
+# Separate page that holds the website CMS (Portfolio, Blog, Photography).
+CMS_PAGE = (
+    os.environ.get("NOTION_CMS_PAGE", "").strip()
+    or "4014ccd1-7b44-810f-98a6-d5879f8e9dd0"
+)
 NOTION_VERSION = "2022-06-28"
 # One try plus retries. 429 and 5xx back off; other status codes fail immediately.
 MAX_HTTP_ATTEMPTS = 6
@@ -974,14 +976,34 @@ def main():
         blocks = fetch_official_tree(ROOT_PAGE, token)
         if CMS_PAGE and norm_id(CMS_PAGE) != norm_id(ROOT_PAGE):
             print(f"cms page: {CMS_PAGE}")
-            blocks.update(fetch_official_tree(CMS_PAGE, token))
+            try:
+                cms = fetch_official_tree(CMS_PAGE, token)
+                if dashed(CMS_PAGE) in cms:
+                    blocks.update(cms)
+                else:
+                    print("cms page unavailable: share it with the integration")
+            except Exception as error:
+                print(f"cms page unavailable: {error}")
+                print("share the CMS page with the integration, then run again")
     else:
         print("source: public notion.site endpoints")
         blocks = fetch_public(ROOT_PAGE)
         if CMS_PAGE and norm_id(CMS_PAGE) != norm_id(ROOT_PAGE):
             print(f"cms page: {CMS_PAGE}")
-            blocks.update(fetch_public(CMS_PAGE))
+            try:
+                cms = fetch_public(CMS_PAGE)
+                if dashed(CMS_PAGE) in cms:
+                    blocks.update(cms)
+                else:
+                    print("cms page unavailable: a private CMS page needs NOTION_TOKEN")
+            except Exception as error:
+                print(f"cms page unavailable: {error}")
+                print("a private CMS page needs NOTION_TOKEN to be set")
     pages = index_pages(blocks)
+    if CMS_PAGE and norm_id(CMS_PAGE) != norm_id(ROOT_PAGE):
+        # The old public root is now just headings and links. Do not let it
+        # overwrite content/pages/index.md.
+        pages.pop(norm_id(ROOT_PAGE), None)
     print(f"pages in notion: {len(pages)}")
     state = load_state()
     current = existing_pages()
