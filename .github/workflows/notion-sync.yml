@@ -23,6 +23,7 @@ jobs:
       - name: Sync and rebuild
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_CMS_PAGE: ${{ vars.NOTION_CMS_PAGE }}
           NOTION_SYNC_APPLY: "1"
         run: |
           if [ -z "${NOTION_TOKEN}" ]; then

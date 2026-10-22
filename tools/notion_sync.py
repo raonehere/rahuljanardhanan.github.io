@@ -32,6 +32,9 @@ LANDING = ROOT / "content" / "landing.md"
 BLOG_DIR = ROOT / "content" / "blog"
 PHOTO_DATA = ROOT / "content" / "photography.json"
 ROOT_PAGE = "6a818cbd-5bdb-4e19-9949-b0603267a09d"
+# Optional separate page that holds the website CMS (Portfolio, Blog,
+# Photography). Set NOTION_CMS_PAGE to its page ID.
+CMS_PAGE = os.environ.get("NOTION_CMS_PAGE", "").strip()
 NOTION_VERSION = "2022-06-28"
 # One try plus retries. 429 and 5xx back off; other status codes fail immediately.
 MAX_HTTP_ATTEMPTS = 6
@@ -820,6 +823,25 @@ def separate_paragraphs(markdown):
     return "\n".join(out)
 
 
+def take_date(markdown):
+    """Use an optional first line like ``Date: 2024-01-12`` as the post date."""
+    lines = markdown.splitlines()
+    while lines and not lines[0].strip():
+        lines.pop(0)
+    if not lines:
+        return None, markdown
+    match = re.match(
+        r"^(?:date|published)\s*:\s*(\d{4}-\d{2}-\d{2})\s*$", lines[0].strip(), re.I
+    )
+    if not match:
+        return None, markdown
+    try:
+        value = datetime.strptime(match.group(1), "%Y-%m-%d").date()
+    except ValueError:
+        return None, markdown
+    return value, "\n".join(lines[1:]).lstrip("\n")
+
+
 def localize_images(markdown, page_id, slug, blocks, state, apply):
     names = {}
     for block in descendant_blocks(page_id, blocks):
@@ -879,8 +901,9 @@ def sync_blog(blocks, pages, state, apply):
         body = strip_title(render_page_body(info["id"], blocks, pages))
         body = separate_paragraphs(body)
         body = localize_images(body, info["id"], slug, blocks, state, apply)
-        published = block_date(block)
-        if not block.get("created_time") and path.exists():
+        explicit_date, body = take_date(body)
+        published = explicit_date or block_date(block)
+        if not explicit_date and not block.get("created_time") and path.exists():
             fields, _ = read_front_matter(path)
             try:
                 published = datetime.fromisoformat(fields.get("date", "")).date()
@@ -949,9 +972,15 @@ def main():
     if token:
         print("source: official Notion API")
         blocks = fetch_official_tree(ROOT_PAGE, token)
+        if CMS_PAGE and norm_id(CMS_PAGE) != norm_id(ROOT_PAGE):
+            print(f"cms page: {CMS_PAGE}")
+            blocks.update(fetch_official_tree(CMS_PAGE, token))
     else:
         print("source: public notion.site endpoints")
         blocks = fetch_public(ROOT_PAGE)
+        if CMS_PAGE and norm_id(CMS_PAGE) != norm_id(ROOT_PAGE):
+            print(f"cms page: {CMS_PAGE}")
+            blocks.update(fetch_public(CMS_PAGE))
     pages = index_pages(blocks)
     print(f"pages in notion: {len(pages)}")
     state = load_state()

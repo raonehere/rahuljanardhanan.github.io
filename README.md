@@ -36,6 +36,8 @@ Both are optional. If the matching page is missing, the local files stay in char
 
 **Blog.** Add a page titled **Blog** under the portfolio page in Notion. Each child page becomes a post: the page title is the post title, the creation date is the post date, and the first paragraph becomes the list summary. The sync writes one Markdown file per post to `content/blog/` and rebuilds the blog.
 
+To backdate a post, make the first line of the page a paragraph like `Date: 2024-01-12`. The sync uses it and removes it from the published text.
+
 **Photography.** Add a page titled **Photography** under the portfolio page and put the photos in it as image blocks, in the order you want. Drag the blocks to reorder. The image caption becomes the tile caption. To make a tile link somewhere, end the caption with a vertical bar and the link:
 
 ```text
@@ -45,6 +47,10 @@ Light Painting | portfolio/projects/light-painting-portraits/
 The sync downloads the images to `media/photography/` and rewrites `content/photography.json`.
 
 The sync is additive: deleting a post or photo in Notion does not delete the local copy. Remove the local file yourself if you want it gone.
+
+### Separate CMS page
+
+If the CMS pages live in their own Notion page instead of under the portfolio page, set the `NOTION_CMS_PAGE` environment variable (or the repository variable of the same name) to that page ID. The sync then reads both trees. Share the page with the same Notion integration.
 
 ## Sync Notion to the site
 
