@@ -9,20 +9,20 @@ cover: null
 # Rahul Janardhanan / Portfolio
 
 ## Recent Projects
-- [‣](missing.md)
-- [‣](missing.md)
-- [‣](missing.md)
+- [Snake Widget for NothingOS](snake-widget-for-nothingos.md)
+- [DPS-UK / Animated Explainer](dps-uk-animated-explainer.md)
+- [Kettle / Logo Animation](kettle-logo-animation.md)
 
 ## Personal Projects
-Design
-Video
-Animation
+- [Design](design.md)
+- [Video](video.md)
+- [Animation](animation.md)
 
 ## Client Projects
-Design
-Animation
-Photo
-Video
+- [Design](design.md)
+- [Animation](animation.md)
+- [Photo](photo.md)
+- [Video](video.md)
 ## Connect with me
 [Email: bjrahul7@gmail.com](mailto:bjrahul7@gmail.com)
 [instagram.com/rahul.janar.dhanan](http://instagram.com/rahul.janar.dhanan)
