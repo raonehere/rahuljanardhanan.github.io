@@ -9,34 +9,19 @@
   <link rel="canonical" href="https://rahuljanardhanan.com/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="landing" id="top">
   <a class="skip" href="#main">Skip to content</a>
 
-  <header class="site-header">
-    <div class="shell header-inner">
-      <a class="brand" href="#top">Rahul Janardhanan</a>
-      <nav class="header-nav" aria-label="Main">
-        <a href="portfolio/">Portfolio</a>
-        <a href="photography/">Photography</a>
-        <a href="blog/">Blog</a>
-      </nav>
-    </div>
-  </header>
-
   <main id="main" class="landing-wrap">
     <div class="shell landing-main">
-      <h1>Rahul Janardhanan</h1>
+      <div class="hero-row">
+        <h1>hi, I'm <span class="name"><span class="dot"></span>Rahul</span> Janardhanan</h1>
+        <img class="hero-portrait" src="assets/home/rahul-portrait.jpg" alt="Portrait of Rahul Janardhanan">
+      </div>
       <p class="landing-intro">Visual artist.</p>
-      <nav class="landing-shortcuts" aria-label="Shortcuts">
-          <a href="https://play.google.com/store/apps/details?id=com.projectkriya.glyphlab" target="_blank" rel="noopener noreferrer">Glyph Lab app</a>
-          <a href="portfolio/projects/snake-widget-for-nothingos/">Snake widget</a>
-          <a href="blog/ten-widgets-in-ten-days/">10 widgets in 10 days</a>
-          <a href="blog/ten-days-ten-toys/">10 toys for Glyph Matrix</a>
-          <a href="walkie/connect/">Walkie Talkie</a>
-      </nav>
       <section class="landing-featured" aria-labelledby="featured-heading">
         <h2 id="featured-heading">Featured</h2>
         <div class="feature-list">
@@ -49,7 +34,29 @@
               <p class="feature-links"><a href="https://play.google.com/store/apps/details?id=com.projectkriya.glyphlab" target="_blank" rel="noopener noreferrer">Get it on Google Play</a><a href="walkie/connect/">Walkie Talkie page</a><a href="blog/glyph-lab/">Read the post</a></p>
             </div>
           </article>
+          <article class="feature-card">
+            <div class="feature-media" aria-hidden="true"><span>Photo</span></div>
+            <div class="feature-body">
+              <h3><a href="portfolio/projects/snake-widget-for-nothingos/">Snake widget</a></h3>
+              <p class="feature-links"><a href="portfolio/projects/snake-widget-for-nothingos/">Snake widget</a></p>
+            </div>
+          </article>
+          <article class="feature-card">
+            <div class="feature-media" aria-hidden="true"><span>Photo</span></div>
+            <div class="feature-body">
+              <h3><a href="blog/ten-widgets-in-ten-days/">10 widgets in 10 days</a></h3>
+              <p class="feature-links"><a href="blog/ten-widgets-in-ten-days/">10 widgets in 10 days</a></p>
+            </div>
+          </article>
         </div>
+      </section>
+      <section class="landing-projects" aria-labelledby="projects-heading">
+        <h2 id="projects-heading" class="hand">my Projects</h2>
+        <nav class="landing-shortcuts" aria-label="Projects">
+          <a href="portfolio/">Portfolio</a>
+          <a href="blog/ten-days-ten-toys/">10 toys for Glyph Matrix</a>
+          <a href="walkie/connect/">Walkie Talkie</a>
+        </nav>
       </section>
       <ul class="landing-social">
         <li><a href="mailto:rahul.janardhanan.here@gmail.com" aria-label="Email"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a></li>

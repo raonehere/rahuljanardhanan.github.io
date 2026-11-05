@@ -636,22 +636,28 @@ def link_target(href):
     return ""
 
 
-def featured_html(featured):
-    if not featured:
-        return ""
-    cards = []
-    for item in featured:
-        name = esc(item["name"])
-        links = item["links"]
+def featured_html(featured, shortcuts):
+    # Bauhaus landing: three cards from featured/shortcuts (Glyph Lab first).
+    shortcuts = list(shortcuts)
+
+    def shortcut_for(name):
+        wanted = name.lower()
+        for i, (label, href) in enumerate(shortcuts):
+            if wanted in label.lower():
+                return shortcuts.pop(i)
+        return None
+
+    def feature_card(name, tag, about, links, image=""):
+        links = list(links)
         if links:
             href = links[0][1]
-            heading = f'<a href="{esc(href)}"{link_target(href)}>{name}</a>'
+            heading = f'<a href="{esc(href)}"{link_target(href)}>{esc(name)}</a>'
         else:
-            heading = name
-        if item.get("image"):
+            heading = esc(name)
+        if image:
             media = (
                 f'<div class="feature-media">'
-                f'<img src="{esc(item["image"])}" alt="{name}">'
+                f'<img src="{esc(image)}" alt="{esc(name)}">'
                 f"</div>"
             )
         else:
@@ -661,11 +667,11 @@ def featured_html(featured):
                 "</div>"
             )
         body = []
-        if item["tag"]:
-            body.append(f'<p class="feature-tag">{esc(item["tag"])}</p>')
+        if tag:
+            body.append(f'<p class="feature-tag">{esc(tag)}</p>')
         body.append(f"<h3>{heading}</h3>")
-        if item["about"]:
-            body.append(f'<p class="feature-about">{esc(item["about"])}</p>')
+        if about:
+            body.append(f'<p class="feature-about">{esc(about)}</p>')
         if links:
             anchors = "".join(
                 f'<a href="{esc(href)}"{link_target(href)}>{esc(label)}</a>'
@@ -680,7 +686,46 @@ def featured_html(featured):
             "  </div>",
             "</article>",
         ]
-        cards.append("\n".join("      " + line for line in lines))
+        return "\n".join("      " + line for line in lines)
+
+    cards = []
+    seen = []
+    for item in featured:
+        seen.append(item["name"].lower())
+        cards.append(
+            feature_card(
+                item["name"],
+                item.get("tag", ""),
+                item.get("about", ""),
+                item.get("links", []),
+                item.get("image", ""),
+            )
+        )
+    # Ensure Glyph Lab is first.
+    glyph_taken = shortcut_for("Glyph Lab")
+    if glyph_taken and not any("glyph lab" in c.lower() for c in cards):
+        label, href = glyph_taken
+        cards.insert(
+            0,
+            feature_card(label, "Android app", "", [(label, href)]),
+        )
+    # Fill up to three cards from remaining shortcuts.
+    filler_names = [
+        "Snake widget",
+        "10 widgets in 10 days",
+        "10 toys for Glyph Matrix",
+        "Walkie Talkie",
+    ]
+    for label, href in list(shortcuts):
+        if len(cards) >= 3:
+            break
+        if label in filler_names or True:
+            shortcuts.remove((label, href))
+            cards.append(feature_card(label, "", "", [(label, href)]))
+    # Cap at three.
+    cards = cards[:3]
+    if not cards:
+        return ""
     body = "\n".join(cards)
     return f"""  <section class="landing-featured" aria-labelledby="featured-heading">
     <h2 id="featured-heading">Featured</h2>
@@ -698,26 +743,48 @@ def write_landing():
     blog = fields.get("blog", "").strip()
     photography = fields.get("photography", "").strip()
 
-    nav = ['<a href="portfolio/">Portfolio</a>']
+    # Bauhaus landing: Glyph Lab first; featured/shortcuts feed cards.
+    ordered_shortcuts = list(shortcuts)
+    glyph_shortcut = None
+    for item in list(ordered_shortcuts):
+        if "glyph lab" in item[0].lower():
+            glyph_shortcut = item
+            break
+    if glyph_shortcut:
+        ordered_shortcuts.remove(glyph_shortcut)
+        ordered_shortcuts.insert(0, glyph_shortcut)
+    card_html = featured_html(featured, ordered_shortcuts)
+
+    # Which shortcuts were NOT used in the 3 cards.
+    cards_needed = max(0, 3 - len(featured))
+    remaining_shortcuts = list(ordered_shortcuts)
+    glyph_is_card = glyph_shortcut and not any(
+        "glyph lab" in f["name"].lower() for f in featured
+    )
+    if glyph_is_card and cards_needed > 0:
+        # Glyph Lab shortcut counts as one card if featured didn't cover it.
+        cards_needed -= 1
+    if glyph_shortcut and glyph_shortcut in remaining_shortcuts:
+        remaining_shortcuts.remove(glyph_shortcut)
+    for _ in range(cards_needed):
+        if remaining_shortcuts:
+            remaining_shortcuts.pop(0)
+
+    nav = []
     if photography:
         nav.append(f'<a href="{esc(photography)}">Photography</a>')
     if blog:
         nav.append(f'<a href="{esc(blog)}">Blog</a>')
     nav_html = "\n        ".join(nav)
 
-    if shortcuts:
-        pills = "\n          ".join(
+    project_links = ['<a href="portfolio/">Portfolio</a>']
+    for label, href in remaining_shortcuts:
+        project_links.append(
             f'<a href="{esc(href)}"{link_target(href)}>{esc(label)}</a>'
-            for label, href in shortcuts
         )
-        shortcuts_html = f"""      <nav class="landing-shortcuts" aria-label="Shortcuts">
-          {pills}
-      </nav>
-"""
-    else:
-        shortcuts_html = ""
+    project_links_html = "\n          ".join(project_links)
 
-    featured_block = featured_html(featured)
+    featured_block = card_html
     if featured_block:
         featured_block = "".join(
             "    " + line for line in featured_block.splitlines(keepends=True)
@@ -733,26 +800,26 @@ def write_landing():
   <link rel="canonical" href="{SITE}/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="landing" id="top">
   <a class="skip" href="#main">Skip to content</a>
 
-  <header class="site-header">
-    <div class="shell header-inner">
-      <a class="brand" href="#top">{esc(fields["title"])}</a>
-      <nav class="header-nav" aria-label="Main">
-        {nav_html}
-      </nav>
-    </div>
-  </header>
-
   <main id="main" class="landing-wrap">
     <div class="shell landing-main">
-      <h1>{esc(fields["title"])}</h1>
+      <div class="hero-row">
+        <h1>hi, I'm <span class="name"><span class="dot"></span>Rahul</span> Janardhanan</h1>
+        <img class="hero-portrait" src="assets/home/rahul-portrait.jpg" alt="Portrait of Rahul Janardhanan">
+      </div>
       <p class="landing-intro">{esc(fields["intro"])}</p>
-{shortcuts_html}{featured_block}      <ul class="landing-social">
+{featured_block}      <section class="landing-projects" aria-labelledby="projects-heading">
+        <h2 id="projects-heading" class="hand">my Projects</h2>
+        <nav class="landing-shortcuts" aria-label="Projects">
+          {project_links_html}
+        </nav>
+      </section>
+      <ul class="landing-social">
         <li><a href="mailto:{esc(email)}" aria-label="Email">{ICON_MAIL}</a></li>
         <li><a href="{esc(fields["instagram"])}" target="_blank" rel="noopener noreferrer" aria-label="Instagram">{ICON_INSTAGRAM}</a></li>
         <li><a href="{esc(fields["x"])}" target="_blank" rel="noopener noreferrer" aria-label="X">{ICON_X}</a></li>
