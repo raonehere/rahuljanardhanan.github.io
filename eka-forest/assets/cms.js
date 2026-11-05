@@ -44,8 +44,11 @@
   }
   function apply(d) {
     var n = 0;
+    // Footer Address block removed: never render footer.address from CMS
+    document.querySelectorAll('[data-cms="footer.address"]').forEach(function (el) { el.remove(); });
     var get = function (path) { var p = path.split('.'); return d[p[0]] && d[p[0]][p[1]]; };
     document.querySelectorAll('[data-cms]').forEach(function (el) {
+      if (el.getAttribute('data-cms') === 'footer.address') { el.remove(); return; }
       var v = get(el.getAttribute('data-cms')); if (v === undefined) return; n++;
       if (/[<&]/.test(v)) safeHTML(el, v.replace(/\n/g, '<br>'));
       else { el.textContent = ''; v.split('\n').forEach(function (line, i) {
