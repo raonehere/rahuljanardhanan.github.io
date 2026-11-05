@@ -82,9 +82,13 @@ ul{margin:0;padding:0;list-style:none}
 
 /* ---------- Stays ---------- */
 .stays{max-width:1440px;margin:0 auto;padding:195px var(--pad-r) 0 var(--pad-l)}
-.stays__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:22px}
+.stays__grid{display:grid;grid-template-columns:repeat(2,1fr);gap:56px 48px;margin-top:48px}
+.stays .card{padding:28px;background:rgba(233,237,239,.38);border:1px solid rgba(101,67,48,.22);border-radius:28px}
+.stays .ph--card{aspect-ratio:4/3;border-radius:18px;min-height:260px}
 .ph--card{aspect-ratio:4/5;border-radius:20px}
 .card p{font-size:16px;line-height:26px;margin:0}
+.stays .card .h3{margin-top:20px}
+@media (max-width:719px){.stays__grid{grid-template-columns:1fr;gap:32px}.stays .card{padding:20px}.stays .ph--card{min-height:220px}}
 
 /* ---------- Gallery strip ---------- */
 .gallery{max-width:1440px;margin:0 auto;padding:178px 0 0 var(--pad-l)}
@@ -127,7 +131,7 @@ details p{margin:0;padding:0 20px 20px;font-size:17px;line-height:28px}
 
 /* ---------- Footer (not designed in Figma; extended in same style) ---------- */
 .site-footer{max-width:1440px;margin:200px auto 0;padding:0 var(--pad-r) 40px var(--pad-l)}
-.footer__inner{border-top:1px solid var(--brown);padding-top:56px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:40px}
+.footer__inner{border-top:1px solid var(--brown);padding-top:56px;display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:40px}
 .footer__mark{width:120px;height:auto}
 .site-footer ul li,.site-footer address{font:400 16px/28px var(--f-body);font-style:normal}
 .site-footer a{text-decoration:none}
@@ -168,7 +172,7 @@ details p{margin:0;padding:0 20px 20px;font-size:17px;line-height:28px}
   .reach{padding-top:88px}
   .reach__map{order:-1;aspect-ratio:4/3}
   .stays,.gallery,.faq{padding-top:88px}
-  .stays__grid{grid-template-columns:1fr 1fr;gap:16px}
+  .stays__grid{grid-template-columns:1fr;gap:32px}
   .card .h3{font-size:18px;line-height:24px;margin-top:12px}
   .card p{font-size:14px;line-height:22px}
   .ph--tile{flex-basis:240px;height:280px}.ph--tall{flex-basis:200px;height:280px}
@@ -231,3 +235,9 @@ details p{margin:0;padding:0 20px 20px;font-size:17px;line-height:28px}
   .prose p,.prose li{font-size:16px;line-height:27px}
   .prose h2{font-size:22px;line-height:30px;margin-top:32px}
 }
+
+/* ---------- Sample events ---------- */
+.sample-tag{display:inline-block;border:1.5px solid var(--brown);padding:6px 14px;font:400 14px/20px var(--f-head);letter-spacing:.16em;text-transform:uppercase;color:var(--brown);background:rgba(233,237,239,.55);border-radius:999px;margin:0 0 12px}
+.btn--sample{display:inline-flex;align-items:center;justify-content:center;padding:0 30px;border:1.5px dashed var(--brown);color:var(--brown);font:400 36px/60px var(--f-disp);letter-spacing:7.2px;text-transform:uppercase;opacity:.75;cursor:not-allowed;line-height:1.3;padding-top:8px;padding-bottom:8px;font-size:18px;letter-spacing:4px}
+.event__sample-cta{margin-top:20px}
+@media (max-width:760px){.btn--sample{font-size:15px;letter-spacing:3px;padding:0 18px}}
