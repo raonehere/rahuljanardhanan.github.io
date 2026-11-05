@@ -801,6 +801,7 @@ a.card-link:hover h2 {
   display: flex;
   align-items: center;
   padding-block: 72px 96px;
+  overflow: visible;
 }
 
 .hero-row {
@@ -810,21 +811,31 @@ a.card-link:hover h2 {
   gap: 24px 32px;
 }
 
+.landing-main {
+  min-width: 0;
+  overflow: visible;
+}
+
 .landing-main h1 {
   font-size: clamp(40px, 8vw, 72px);
   font-weight: 500;
-  letter-spacing: -0.045em;
+  letter-spacing: 0;
   line-height: 1.02;
+  overflow: visible;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  max-width: 100%;
 }
 
 .hand,
 .name {
-  font-family: Caveat, cursive;
+  font-family: "Sue Ellen Francisco", cursive;
   font-weight: 700;
+  letter-spacing: 0;
 }
 
 h2.hand {
-  font-family: Caveat, cursive;
+  font-family: "Sue Ellen Francisco", cursive;
   font-weight: 700;
   font-size: clamp(36px, 6vw, 56px);
   line-height: 1.1;
@@ -1176,5 +1187,17 @@ h2.hand {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-row .hero-portrait {
+    width: min(320px, 90vw);
+    max-width: 100%;
   }
 }
