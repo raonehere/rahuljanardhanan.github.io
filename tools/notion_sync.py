@@ -29,7 +29,14 @@ PAGES = ROOT / "content" / "pages"
 MEDIA = ROOT / "media"
 STATE_PATH = ROOT / "content" / "notion-sync-state.json"
 LANDING = ROOT / "content" / "landing.md"
+BLOG_DIR = ROOT / "content" / "blog"
+PHOTO_DATA = ROOT / "content" / "photography.json"
 ROOT_PAGE = "6a818cbd-5bdb-4e19-9949-b0603267a09d"
+# Separate page that holds the website CMS (Portfolio, Blog, Photography).
+CMS_PAGE = (
+    os.environ.get("NOTION_CMS_PAGE", "").strip()
+    or "4014ccd1-7b44-810f-98a6-d5879f8e9dd0"
+)
 NOTION_VERSION = "2022-06-28"
 # One try plus retries. 429 and 5xx back off; other status codes fail immediately.
 MAX_HTTP_ATTEMPTS = 6
@@ -548,8 +555,13 @@ def fetch_official_tree(root_id, token):
             "properties": {},
             "content": [],
             "version": item.get("last_edited_time"),
+            "created_time": item.get("created_time"),
+            "last_edited_time": item.get("last_edited_time"),
             "parent_id": (item.get("parent") or {}).get("block_id") or (item.get("parent") or {}).get("page_id"),
         }
+        caption = rich_to_public(payload.get("caption") or [])
+        if caption:
+            block["properties"]["caption"] = caption
         if title:
             block["properties"]["title"] = title
         if source:
@@ -605,6 +617,352 @@ def maybe_landing(blocks, pages, apply):
     return None
 
 
+def page_depth(page_id, blocks):
+    depth = 0
+    seen = set()
+    current = blocks.get(dashed(page_id)) or blocks.get(page_id) or {}
+    while True:
+        parent = norm_id(current.get("parent_id", ""))
+        if not parent or parent in seen or parent == norm_id(page_id):
+            return depth
+        seen.add(parent)
+        depth += 1
+        current = blocks.get(dashed(parent)) or blocks.get(parent) or {}
+
+
+def find_section(pages, blocks, names, kind):
+    """Find the Notion page used as the blog or photography source.
+
+    kind is "page" for a blog index (children are posts) or "image" for a
+    gallery (children are photos). Pages that do not contain the right kind
+    of block are ignored, so a portfolio category with the same title does
+    not win.
+    """
+    matches = []
+    for page in pages.values():
+        if page["title"].strip().lower() not in names:
+            continue
+        if norm_id(page["id"]) == norm_id(ROOT_PAGE):
+            continue
+        block = blocks.get(dashed(page["id"])) or blocks.get(page["id"]) or {}
+        children = [
+            blocks.get(dashed(child)) or blocks.get(child) or {}
+            for child in (block.get("content") or [])
+        ]
+        score = sum(1 for child in children if child.get("type") == kind)
+        if score:
+            matches.append((page_depth(page["id"], blocks), -score, page))
+    if not matches:
+        return None
+    matches.sort(key=lambda item: (item[0], item[1]))
+    return matches[0][2]
+
+
+def child_pages(page_id, pages, blocks):
+    block = blocks.get(dashed(page_id)) or blocks.get(page_id) or {}
+    found = []
+    for child in block.get("content") or []:
+        info = pages.get(norm_id(child))
+        if info:
+            found.append(info)
+    return found
+
+
+def descendant_blocks(page_id, blocks):
+    page = blocks.get(dashed(page_id)) or blocks.get(page_id) or {}
+    queue = list(page.get("content") or [])
+    seen = set()
+    while queue:
+        child = queue.pop(0)
+        if child in seen:
+            continue
+        seen.add(child)
+        block = blocks.get(dashed(child)) or blocks.get(child) or {}
+        if block:
+            yield block
+        queue.extend(block.get("content") or [])
+
+
+def rich_text(parts):
+    if not parts:
+        return ""
+    out = []
+    for part in parts:
+        if isinstance(part, str):
+            out.append(part)
+        elif part:
+            out.append(part[0] or "")
+    return "".join(out).strip()
+
+
+def block_date(block):
+    for key in ("created_time", "last_edited_time"):
+        value = block.get(key)
+        if isinstance(value, (int, float)):
+            seconds = value / 1000 if value > 100000000000 else value
+            try:
+                return datetime.fromtimestamp(seconds, timezone.utc).date()
+            except (OverflowError, OSError, ValueError):
+                pass
+        elif isinstance(value, str) and value:
+            try:
+                return datetime.fromisoformat(value.replace("Z", "+00:00")).date()
+            except ValueError:
+                pass
+    return datetime.now(timezone.utc).date()
+
+
+def safe_filename(name, block_id):
+    name = (name or "image").strip()
+    stem, dot, ext = name.rpartition(".")
+    if not dot:
+        stem, ext = name, "jpg"
+    stem = re.sub(r"[^a-zA-Z0-9]+", "-", stem).strip("-").lower() or "image"
+    ext = re.sub(r"[^a-zA-Z0-9]", "", ext).lower() or "jpg"
+    digest = hashlib.sha1(block_id.encode()).hexdigest()[:8]
+    return f"{stem[:48]}-{digest}.{ext}"
+
+
+def ensure_media(block, folder, state, apply):
+    """Download a Notion file once and return its site-relative path."""
+    filename = safe_filename(file_name_from(block), block["id"])
+    rel = (Path("media") / folder / filename).as_posix()
+    dest = ROOT / rel
+    version = str(block.get("version") or "")
+    previous = state.setdefault("blocks", {}).get(block["id"], {})
+    if dest.exists() and (not version or previous.get("version") == version):
+        return rel
+    if not apply:
+        return rel if dest.exists() else None
+    url = signed_url(block)
+    if not url:
+        return rel if dest.exists() else None
+    try:
+        request = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(request, timeout=60) as response:
+            data = response.read()
+    except Exception as error:
+        print(f"  could not download {filename}: {error}")
+        return rel if dest.exists() else None
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_bytes(data)
+    state["blocks"][block["id"]] = {"version": version, "path": rel}
+    return rel
+
+
+def read_front_matter(path):
+    text = path.read_text(encoding="utf-8")
+    if not text.startswith("---"):
+        return {}, text
+    _, front, body = text.split("---", 2)
+    fields = {}
+    for line in front.splitlines():
+        if ":" not in line or line.lstrip().startswith("#"):
+            continue
+        key, value = line.split(":", 1)
+        fields[key.strip()] = value.strip().strip('"')
+    return fields, body.strip("\n")
+
+
+def existing_blog():
+    by_id, by_title = {}, {}
+    if not BLOG_DIR.exists():
+        return by_id, by_title
+    for path in sorted(BLOG_DIR.glob("*.md")):
+        fields, _ = read_front_matter(path)
+        notion_id = norm_id(fields.get("notion_id", ""))
+        if notion_id:
+            by_id[notion_id] = path
+        title = fields.get("title", "").strip().lower()
+        if title:
+            by_title.setdefault(title, path)
+    return by_id, by_title
+
+
+def plain_text(text):
+    text = re.sub(r"!\[[^\]]*\]\([^)]*\)", "", text)
+    text = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", text)
+    text = re.sub(r"[*_`#>]", "", text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def summarize(markdown):
+    for line in markdown.splitlines():
+        line = line.strip()
+        if not line or line.startswith(("#", "-", "!", "*", "|", ">")):
+            continue
+        text = plain_text(line)
+        if text:
+            if len(text) > 160:
+                text = text[:157].rsplit(" ", 1)[0] + "…"
+            return text
+    return ""
+
+
+def strip_title(markdown):
+    lines = markdown.splitlines()
+    if lines and lines[0].startswith("# "):
+        lines = lines[1:]
+    while lines and not lines[0].strip():
+        lines.pop(0)
+    return "\n".join(lines).strip()
+
+
+def separate_paragraphs(markdown):
+    """Notion emits one line per block with no blank line between them."""
+    out = []
+    for line in markdown.splitlines():
+        stripped = line.strip()
+        if not stripped:
+            out.append("")
+            continue
+        if out and out[-1].strip():
+            previous = out[-1].strip()
+            block_starts = ("#", "-", "!", "|", ">")
+            if not stripped.startswith(block_starts) and not previous.startswith(block_starts):
+                out.append("")
+        out.append(line)
+    return "\n".join(out)
+
+
+def take_date(markdown):
+    """Use an optional first line like ``Date: 2024-01-12`` as the post date."""
+    lines = markdown.splitlines()
+    while lines and not lines[0].strip():
+        lines.pop(0)
+    if not lines:
+        return None, markdown
+    match = re.match(
+        r"^(?:date|published)\s*:\s*(\d{4}-\d{2}-\d{2})\s*$", lines[0].strip(), re.I
+    )
+    if not match:
+        return None, markdown
+    try:
+        value = datetime.strptime(match.group(1), "%Y-%m-%d").date()
+    except ValueError:
+        return None, markdown
+    return value, "\n".join(lines[1:]).lstrip("\n")
+
+
+def localize_images(markdown, page_id, slug, blocks, state, apply):
+    names = {}
+    for block in descendant_blocks(page_id, blocks):
+        if block.get("type") != "image":
+            continue
+        original = file_name_from(block)
+        rel = ensure_media(block, f"blog/{slug}", state, apply)
+        if rel and original not in names:
+            names[original] = rel
+
+    def replace(match):
+        local = names.get(match.group(1))
+        return f"![]({local})" if local else match.group(0)
+
+    return re.sub(r"!\[\]\(\.\./media/[^/]+/([^)]+)\)", replace, markdown)
+
+
+def split_caption(text):
+    text = (text or "").strip()
+    if "|" not in text:
+        return text, ""
+    caption, link = text.rsplit("|", 1)
+    return caption.strip(), link.strip()
+
+
+def sync_blog(blocks, pages, state, apply):
+    section = find_section(pages, blocks, ("blog", "posts", "writing"), "page")
+    if not section:
+        return None
+    posts = child_pages(section["id"], pages, blocks)
+    if not posts:
+        return section["title"]
+    BLOG_DIR.mkdir(parents=True, exist_ok=True)
+    by_id, by_title = existing_blog()
+    changed = 0
+    for info in posts:
+        block = blocks.get(dashed(info["id"])) or blocks.get(info["id"]) or {}
+        notion_id = norm_id(info["id"])
+        path = by_id.get(notion_id)
+        if path is None:
+            # Adopt a local post with the same title the first time it
+            # appears in Notion, so migrated posts keep their URL.
+            candidate = by_title.get(info["title"].strip().lower())
+            if candidate:
+                fields, _ = read_front_matter(candidate)
+                if not fields.get("notion_id"):
+                    path = candidate
+        if path is None:
+            slug = info["slug"]
+            counter = 2
+            while (BLOG_DIR / f"{slug}.md").exists():
+                slug = f"{info['slug']}-{counter}"
+                counter += 1
+            path = BLOG_DIR / f"{slug}.md"
+        else:
+            slug = path.stem
+        body = strip_title(render_page_body(info["id"], blocks, pages))
+        body = separate_paragraphs(body)
+        body = localize_images(body, info["id"], slug, blocks, state, apply)
+        explicit_date, body = take_date(body)
+        published = explicit_date or block_date(block)
+        if not explicit_date and not block.get("created_time") and path.exists():
+            fields, _ = read_front_matter(path)
+            try:
+                published = datetime.fromisoformat(fields.get("date", "")).date()
+            except ValueError:
+                pass
+        new_text = (
+            "---\n"
+            f"title: {info['title']}\n"
+            f"date: {published.isoformat()}\n"
+            f"summary: {summarize(body)}\n"
+            f"notion_id: {dashed(notion_id)}\n"
+            "---\n\n"
+            f"{body.rstrip()}\n"
+        )
+        old_text = path.read_text(encoding="utf-8") if path.exists() else ""
+        if normalize(old_text) != normalize(new_text):
+            changed += 1
+            if apply:
+                path.write_text(new_text, encoding="utf-8")
+    if apply:
+        print(f"blog: {len(posts)} posts in Notion, {changed} updated")
+    return section["title"]
+
+
+def sync_photography(blocks, pages, state, apply):
+    section = find_section(pages, blocks, ("photography", "photos"), "image")
+    if not section:
+        return None
+    images = [
+        block
+        for block in descendant_blocks(section["id"], blocks)
+        if block.get("type") == "image"
+    ]
+    if not images or not PHOTO_DATA.exists():
+        return section["title"]
+    data = json.loads(PHOTO_DATA.read_text(encoding="utf-8"))
+    photos = []
+    for block in images:
+        rel = ensure_media(block, "photography", state, apply)
+        if not rel:
+            continue
+        caption, link = split_caption(
+            rich_text((block.get("properties") or {}).get("caption"))
+        )
+        item = {"image": rel, "alt": caption or "Photograph", "caption": caption}
+        if link:
+            item["link"] = link
+        photos.append(item)
+    if apply and photos:
+        data["photos"] = photos
+        PHOTO_DATA.write_text(
+            json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+        )
+        print(f"photography: {len(photos)} photos in Notion")
+    return section["title"]
+
+
 def main():
     dry = "--dry-run" in sys.argv or "--apply" not in sys.argv and os.environ.get("NOTION_SYNC_APPLY") != "1"
     # A normal invocation writes. --dry-run only reports.
@@ -616,11 +974,38 @@ def main():
     if token:
         print("source: official Notion API")
         blocks = fetch_official_tree(ROOT_PAGE, token)
+        if CMS_PAGE and norm_id(CMS_PAGE) != norm_id(ROOT_PAGE):
+            print(f"cms page: {CMS_PAGE}")
+            try:
+                cms = fetch_official_tree(CMS_PAGE, token)
+                if dashed(CMS_PAGE) in cms:
+                    blocks.update(cms)
+                else:
+                    print("cms page unavailable: share it with the integration")
+            except Exception as error:
+                print(f"cms page unavailable: {error}")
+                print("share the CMS page with the integration, then run again")
     else:
         print("source: public notion.site endpoints")
         blocks = fetch_public(ROOT_PAGE)
+        if CMS_PAGE and norm_id(CMS_PAGE) != norm_id(ROOT_PAGE):
+            print(f"cms page: {CMS_PAGE}")
+            try:
+                cms = fetch_public(CMS_PAGE)
+                if dashed(CMS_PAGE) in cms:
+                    blocks.update(cms)
+                else:
+                    print("cms page unavailable: a private CMS page needs NOTION_TOKEN")
+            except Exception as error:
+                print(f"cms page unavailable: {error}")
+                print("a private CMS page needs NOTION_TOKEN to be set")
     pages = index_pages(blocks)
+    if CMS_PAGE and norm_id(CMS_PAGE) != norm_id(ROOT_PAGE):
+        # The old public root is now just headings and links. Do not let it
+        # overwrite content/pages/index.md.
+        pages.pop(norm_id(ROOT_PAGE), None)
     print(f"pages in notion: {len(pages)}")
+    state = load_state()
     current = existing_pages()
     changed = []
     missing = []
@@ -645,6 +1030,8 @@ def main():
                 if len(changed) <= 12:
                     print("\n".join(diff[:24]))
     landing = maybe_landing(blocks, pages, apply=not dry)
+    blog_section = sync_blog(blocks, pages, state, apply=not dry)
+    photo_section = sync_photography(blocks, pages, state, apply=not dry)
     print(f"unchanged pages: {len(pages) - len(changed) - len(missing)}")
     print(f"changed pages: {len(changed)}")
     print(f"new pages: {len(missing)}")
@@ -652,6 +1039,14 @@ def main():
         print(f"landing subpage: {landing}")
     else:
         print("landing subpage: none (content/landing.md stays the source)")
+    if blog_section:
+        print(f"blog subpage: {blog_section}")
+    else:
+        print("blog subpage: none (content/blog stays the source)")
+    if photo_section:
+        print(f"photography subpage: {photo_section}")
+    else:
+        print("photography subpage: none (content/photography.json stays the source)")
     if dry:
         print("dry-run: no files written")
         return
@@ -663,10 +1058,10 @@ def main():
         new_text = "---" + item["front"] + "---\n\n" + rendered
         if normalize(new_text) != normalize(item["text"]):
             item["path"].write_text(new_text, encoding="utf-8")
-    state = load_state()
     sync_media(blocks, pages, state, apply=True)
     STATE_PATH.write_text(json.dumps(state, indent=2) + "\n", encoding="utf-8")
-    subprocess.run([sys.executable, str(ROOT / "tools" / "build_pages.py")], check=True)
+    for builder in ("build_pages.py", "build_blog.py", "build_photography.py"):
+        subprocess.run([sys.executable, str(ROOT / "tools" / builder)], check=True)
 
 
 if __name__ == "__main__":

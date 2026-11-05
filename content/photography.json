@@ -1,0 +1,61 @@
+{
+  "title": "Photography",
+  "intro": "Portraits, products, and experiments with light. Most of it shot on a phone — often in auto mode, with very little editing.",
+  "photos": [
+    {
+      "image": "media/light-painting-portraits/02.jpg",
+      "alt": "Portrait lit by a sweeping trail of light",
+      "caption": "Light Painting Portraits",
+      "link": "portfolio/projects/light-painting-portraits/",
+      "width": 1000,
+      "height": 1500
+    },
+    {
+      "image": "media/black-and-white-photography-with-phone/01.jpg",
+      "alt": "Black and white portrait of someone deep in thought",
+      "caption": "Black & White with a Phone",
+      "link": "portfolio/projects/black-and-white-photography-with-phone/",
+      "width": 1600,
+      "height": 2133
+    },
+    {
+      "image": "media/nothing-flat-lay-photography-challenge/01.jpg",
+      "alt": "Flat-lay of Nothing products arranged on a yellow background",
+      "caption": "Flat-lay Challenge",
+      "link": "portfolio/projects/nothing-flat-lay-photography-challenge/",
+      "width": 1600,
+      "height": 1177
+    },
+    {
+      "image": "media/on-your-tales-playing-cards/01.jpg",
+      "alt": "Playing cards for children, photographed for On Your Tales",
+      "caption": "On Your Tales / Playing Cards",
+      "link": "portfolio/projects/on-your-tales-playing-cards/",
+      "width": 1500,
+      "height": 1097
+    },
+    {
+      "image": "media/property-documentation/01.jpg",
+      "alt": "Interior of a resort documented for Rains Valley",
+      "caption": "Rains Valley / Property",
+      "link": "portfolio/projects/property-documentation/",
+      "width": 1188,
+      "height": 1682
+    },
+    {
+      "image": "media/light-painting-portraits/04.jpg",
+      "alt": "Long-exposure portrait with trails of coloured light",
+      "caption": "More Light Painting",
+      "link": "portfolio/projects/light-painting-portraits/",
+      "width": 1000,
+      "height": 1500
+    }
+  ],
+  "post": {
+    "date": "2024-12-30",
+    "date_label": "30 December 2024",
+    "href": "blog/a-year-of-photographs/",
+    "title": "A year of photographs with a phone",
+    "summary": "Testing phone cameras before a launch, shooting light painting in expert mode, and learning to trust auto mode."
+  }
+}
