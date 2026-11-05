@@ -598,6 +598,7 @@ def landing_fields():
     fields = {
         "title": "Rahul Janardhanan",
         "intro": "Visual artist.",
+        "description": "",
         "email": "rahul.janardhanan.here@gmail.com",
         "instagram": "https://instagram.com/rahul.janar.dhanan",
         "x": "https://x.com/raonehere",
@@ -740,62 +741,23 @@ def write_landing():
     # Copy lives in content/landing.md so it is easy to edit.
     fields, featured, shortcuts = landing_fields()
     email = fields["email"]
+    intro = fields.get("description") or fields["intro"]
     blog = fields.get("blog", "").strip()
-    photography = fields.get("photography", "").strip()
+    blog_href = blog or "blog/"
 
-    # Bauhaus landing: Glyph Lab first; featured/shortcuts feed cards.
-    ordered_shortcuts = list(shortcuts)
-    glyph_shortcut = None
-    for item in list(ordered_shortcuts):
-        if "glyph lab" in item[0].lower():
-            glyph_shortcut = item
-            break
-    if glyph_shortcut:
-        ordered_shortcuts.remove(glyph_shortcut)
-        ordered_shortcuts.insert(0, glyph_shortcut)
-    card_html = featured_html(featured, ordered_shortcuts)
-
-    # Which shortcuts were NOT used in the 3 cards.
-    cards_needed = max(0, 3 - len(featured))
-    remaining_shortcuts = list(ordered_shortcuts)
-    glyph_is_card = glyph_shortcut and not any(
-        "glyph lab" in f["name"].lower() for f in featured
+    # Figma landing: portrait top-right, yellow intro, three article boxes, socials only.
+    article_boxes = "\n".join(
+        f'      <a class="landing-article" href="{esc(blog_href)}" aria-label="Article"></a>'
+        for _ in range(3)
     )
-    if glyph_is_card and cards_needed > 0:
-        # Glyph Lab shortcut counts as one card if featured didn't cover it.
-        cards_needed -= 1
-    if glyph_shortcut and glyph_shortcut in remaining_shortcuts:
-        remaining_shortcuts.remove(glyph_shortcut)
-    for _ in range(cards_needed):
-        if remaining_shortcuts:
-            remaining_shortcuts.pop(0)
 
-    nav = []
-    if photography:
-        nav.append(f'<a href="{esc(photography)}">Photography</a>')
-    if blog:
-        nav.append(f'<a href="{esc(blog)}">Blog</a>')
-    nav_html = "\n        ".join(nav)
-
-    project_links = ['<a href="portfolio/">Portfolio</a>']
-    for label, href in remaining_shortcuts:
-        project_links.append(
-            f'<a href="{esc(href)}"{link_target(href)}>{esc(label)}</a>'
-        )
-    project_links_html = "\n          ".join(project_links)
-
-    featured_block = card_html
-    if featured_block:
-        featured_block = "".join(
-            "    " + line for line in featured_block.splitlines(keepends=True)
-        )
     doc = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{esc(fields["title"])}</title>
-  <meta name="description" content="{esc(fields["intro"])}">
+  <meta name="description" content="{esc(intro)}">
   <meta name="theme-color" content="#000000">
   <link rel="canonical" href="{SITE}/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -808,16 +770,13 @@ def write_landing():
 
   <main id="main" class="landing-wrap">
     <div class="shell landing-main">
-      <div class="hero-row">
-        <h1>hi, I'm <span class="name"><span class="dot"></span>Rahul</span> Janardhanan</h1>
+      <div class="hero">
         <img class="hero-portrait" src="assets/home/rahul-portrait.jpg" alt="Portrait of Rahul Janardhanan">
+        <h1>hi, I'm <span class="name"><span class="dot"></span>Rahul</span> Janardhanan</h1>
       </div>
-      <p class="landing-intro">{esc(fields["intro"])}</p>
-{featured_block}      <section class="landing-projects" aria-labelledby="projects-heading">
-        <h2 id="projects-heading" class="hand">my Projects</h2>
-        <nav class="landing-shortcuts" aria-label="Projects">
-          {project_links_html}
-        </nav>
+      <p class="landing-intro">{esc(intro)}</p>
+      <section class="landing-articles" aria-label="Articles">
+{article_boxes}
       </section>
       <ul class="landing-social">
         <li><a href="mailto:{esc(email)}" aria-label="Email">{ICON_MAIL}</a></li>

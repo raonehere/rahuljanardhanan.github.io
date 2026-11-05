@@ -798,33 +798,40 @@ a.card-link:hover h2 {
 .landing-wrap {
   min-height: 100vh;
   min-height: calc(100dvh - var(--header));
-  display: flex;
-  align-items: center;
-  padding-block: 72px 96px;
+  display: block;
+  padding-block: 48px 80px;
   overflow: visible;
 }
 
-.hero-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 24px 32px;
+.hero {
+  position: relative;
+  overflow: visible;
 }
 
 .landing-main {
   min-width: 0;
+  max-width: 560px;
+  margin-inline: auto;
   overflow: visible;
 }
 
 .landing-main h1 {
-  font-size: clamp(40px, 8vw, 72px);
-  font-weight: 500;
+  font-family: "Sue Ellen Francisco", cursive;
+  font-weight: 700;
+  font-size: clamp(56px, 14vw, 84px);
   letter-spacing: 0;
-  line-height: 1.02;
+  line-height: 0.95;
+  color: #ffffff;
+  position: relative;
+  z-index: 2;
+  margin-top: -72px;
   overflow: visible;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
   word-break: normal;
+  white-space: normal;
   max-width: 100%;
+  transform: rotate(-2deg);
+  transform-origin: left center;
 }
 
 .hand,
@@ -858,11 +865,15 @@ h2.hand {
 }
 
 .hero-portrait {
-  width: min(320px, 48vw);
-  max-width: 320px;
+  position: relative;
+  z-index: 1;
+  width: min(260px, 55vw);
+  max-width: 260px;
   aspect-ratio: 1 / 1;
   object-fit: cover;
   display: block;
+  margin-left: auto;
+  overflow: visible;
 }
 
 .name {
@@ -870,9 +881,26 @@ h2.hand {
 }
 
 .landing-intro {
-  margin-top: 16px;
-  color: var(--muted);
-  font-size: 20px;
+  margin-top: 32px;
+  color: #F5C518;
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}
+
+.landing-articles {
+  margin-top: 48px;
+  display: grid;
+  gap: 24px;
+}
+
+.landing-article {
+  display: block;
+  width: 100%;
+  height: 160px;
+  background: #2A2A2A;
+  text-decoration: none;
 }
 
 .landing-projects {
@@ -907,7 +935,7 @@ h2.hand {
   justify-content: center;
   align-items: center;
   gap: 24px;
-  margin-top: 72px;
+  margin-top: 48px;
   padding: 0;
   list-style: none;
 }
@@ -1191,13 +1219,12 @@ h2.hand {
 }
 
 @media (max-width: 560px) {
-  .hero-row {
-    flex-direction: column;
-    align-items: flex-start;
+  .hero-portrait {
+    width: min(220px, 60vw);
+    max-width: 60vw;
   }
 
-  .hero-row .hero-portrait {
-    width: min(320px, 90vw);
-    max-width: 100%;
+  .landing-main h1 {
+    margin-top: -56px;
   }
 }
