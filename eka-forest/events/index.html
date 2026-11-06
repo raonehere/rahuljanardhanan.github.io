@@ -26,15 +26,15 @@
 <header class="site-header">
   <nav class="nav" aria-label="Main">
     <ul class="nav__group nav__group--left">
-      <li><a href="../events/">Events</a></li>
       <!-- PLACEHOLDER: WhatsApp number 910000000000 -->
       <li><a href="https://wa.me/910000000000?text=Hi%20EKA%20Forest%2C%20I%27d%20like%20to%20book%20a%20stay." data-cms-wa target="_blank" rel="noopener">Book</a></li>
+      <li><a href="../events/">Events</a></li>
     </ul>
     <a class="nav__logo" href="../" aria-label="EKA Forest, home">
       <img src="../assets/img/eka-logo.svg" width="117" height="73" alt="EKA Forest logo">
     </a>
     <ul class="nav__group nav__group--right">
-      <li><a href="../blog/">Blog</a></li>
+      <li><a href="../blog/">Journals</a></li>
       <li><a href="../#contact">Contact</a></li>
     </ul>
   </nav>
@@ -46,9 +46,12 @@
   <h1 class="h1" data-cms="events.page_title">Events &amp; retreats</h1>
   <p class="page__intro" data-cms="events.page_intro">The listings below are sample entries shown for layout and design review only. They are not real events and cannot be booked.</p>
 </header>
-<section class="events__list" aria-label="Events">
+<section class="events__section" aria-labelledby="events-upcoming-heading">
+  <h2 class="events__section-title" id="events-upcoming-heading" data-cms="events.upcoming_title">Upcoming events</h2>
+  <div class="events__list events__list--upcoming" aria-label="Upcoming events">
   <article class="event" id="sample-winter-forest-weekend">
-    <figure class="ph ph--event" data-cms-img="events.event1_photo"><figcaption>Photo: forest clearing in winter</figcaption></figure>
+    <figure class="ph ph--event has-photo" data-cms-img="events.event1_photo"
+  style="background-image:url('../assets/img/from-ig/gallery-08.jpg');background-size:cover;background-position:center"><figcaption class="visually-hidden">Photo: forest clearing in winter</figcaption></figure>
     <div class="event__body">
       <p><span class="sample-tag">SAMPLE EVENT</span></p>
       <p class="event__meta"><span data-cms="events.event1_dates">Sat 12 – Sun 13 December 2026</span> · <span data-cms="events.event1_status">Upcoming</span></p>
@@ -61,8 +64,15 @@
       <p><a class="link" href="sample-winter-forest-weekend/">View sample details →</a></p>
     </div>
   </article>
+    <p class="events__empty">No upcoming events yet — watch this space.</p>
+  </div>
+</section>
+<section class="events__section" aria-labelledby="events-past-heading">
+  <h2 class="events__section-title" id="events-past-heading" data-cms="events.past_title">Past events</h2>
+  <div class="events__list events__list--past" aria-label="Past events">
   <article class="event" id="sample-autumn-farm-walk">
-    <figure class="ph ph--event" data-cms-img="events.event2_photo"><figcaption>Photo: farm terraces in autumn</figcaption></figure>
+    <figure class="ph ph--event has-photo" data-cms-img="events.event2_photo"
+  style="background-image:url('../assets/img/from-ig/gallery-12.jpg');background-size:cover;background-position:center"><figcaption class="visually-hidden">Photo: farm terraces in autumn</figcaption></figure>
     <div class="event__body">
       <p><span class="sample-tag">SAMPLE EVENT</span></p>
       <p class="event__meta"><span data-cms="events.event2_dates">Sat 17 – Sun 18 October 2026</span> · <span data-cms="events.event2_status">Past</span></p>
@@ -76,7 +86,8 @@
     </div>
   </article>
   <article class="event" id="sample-mist-morning-gathering">
-    <figure class="ph ph--event" data-cms-img="events.event3_photo"><figcaption>Photo: mist over the valley at dawn</figcaption></figure>
+    <figure class="ph ph--event has-photo" data-cms-img="events.event3_photo"
+  style="background-image:url('../assets/img/from-ig/gallery-03.jpg');background-size:cover;background-position:center"><figcaption class="visually-hidden">Photo: mist over the valley at dawn</figcaption></figure>
     <div class="event__body">
       <p><span class="sample-tag">SAMPLE EVENT</span></p>
       <p class="event__meta"><span data-cms="events.event3_dates">Sat 12 – Sun 13 September 2026</span> · <span data-cms="events.event3_status">Past</span></p>
@@ -90,7 +101,8 @@
     </div>
   </article>
   <article class="event" id="sample-night-sky-evening">
-    <figure class="ph ph--event" data-cms-img="events.event4_photo"><figcaption>Photo: night sky over the ridges</figcaption></figure>
+    <figure class="ph ph--event has-photo" data-cms-img="events.event4_photo"
+  style="background-image:url('../assets/img/from-ig/gallery-18.jpg');background-size:cover;background-position:center"><figcaption class="visually-hidden">Photo: night sky over the ridges</figcaption></figure>
     <div class="event__body">
       <p><span class="sample-tag">SAMPLE EVENT</span></p>
       <p class="event__meta"><span data-cms="events.event4_dates">Sat 15 – Sun 16 August 2026</span> · <span data-cms="events.event4_status">Past</span></p>
@@ -103,6 +115,8 @@
       <p><a class="link" href="sample-night-sky-evening/">View sample details →</a></p>
     </div>
   </article>
+    <p class="events__empty">Past events will appear here.</p>
+  </div>
 </section>
 <p class="page__note" data-cms="events.more_text">New gatherings, if any, will be announced on this page. The four listings above are samples and cannot be booked.</p>
 </main>
