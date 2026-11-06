@@ -9,33 +9,51 @@
   <link rel="canonical" href="https://rahuljanardhanan.com/demo/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sue+Ellen+Francisco&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="demo.css">
 </head>
 <body>
-  <!-- Demo only. Edit the title, yellow description, and card labels in this file. -->
-  <main>
-    <section class="stage">
-      <div class="column">
-        <div class="hero">
-          <img class="portrait" src="../assets/home/rahul-portrait.jpg" alt="Portrait of Rahul Janardhanan" width="800" height="800">
-          <h1>hi, I'm <span class="name"><span class="dot" aria-hidden="true"></span>Rahul</span> Janardhanan</h1>
-        </div>
-        <p class="desc">adljfadsifflasdfjldsajflajljadlfjadlsjflasdfjljadsfjlasdfjflsdajldsjflajsdfljsadlfjadlsjflasdfjldsajflajljadlfjadlsjflasdfjljadsfjasdljflasdfjlsdajldsjflajsdfljsadlfjadlsjflasdfjldsajflajljadlfjadlsjflasdfjfljadsfjasdljflasdfjlsdajldsjflajsdfljs</p>
+  <!-- Demo only. Copy matches Figma node 3507:40. Edit this file to change it. -->
+  <main class="comp">
+    <div class="hero">
+      <div class="portrait">
+        <img src="assets/portrait.png" alt="">
       </div>
-    </section>
-    <div class="column below">
-      <section class="cards" aria-label="Future articles">
-        <a class="card" href="../blog/" aria-label="Future article"></a>
-        <a class="card" href="../blog/" aria-label="Future article"></a>
-        <a class="card" href="../blog/" aria-label="Future article"></a>
-      </section>
-      <ul class="social">
-        <li><a href="mailto:rahul.janardhanan.here@gmail.com" aria-label="Email"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a></li>
-        <li><a href="https://instagram.com/rahul.janar.dhanan" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="0.6" fill="currentColor" stroke="none"/></svg></a></li>
-        <li><a href="https://x.com/raonehere" target="_blank" rel="noopener noreferrer" aria-label="X"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.22-6.82-5.97 6.82H1.67l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23Zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64Z"/></svg></a></li>
-      </ul>
+      <img class="wordmark" src="assets/name.svg" alt="hi, I’m Rahul Janardhanan">
     </div>
+    <p class="bio">I’m a visual artist from Nattika. but I do travel a lot so i might not be at nattika always. i like beaches more than mountains most of the time. and i still love playing outside like a kid. i like to design and build software that is cool.</p>
+    <div class="actions">
+      <a class="action" href="../blog/"><img class="journals" src="assets/journals.svg" alt="Journals"></a>
+      <a class="action" href="../photography/"><img class="photography" src="assets/photography.svg" alt="Photography"></a>
+    </div>
+    <section class="cards" aria-label="Projects">
+      <a class="card" href="../blog/glyph-lab/">
+        <span class="thumb" aria-hidden="true"></span>
+        <span class="copy">
+          <span class="card-title">Glyph Lab</span>
+          <span class="card-text">An app with collection of home screen widgets and toys for Nothing phone 3 and 4a pro</span>
+        </span>
+      </a>
+      <article class="card cooking">
+        <span class="thumb" aria-hidden="true"></span>
+        <span class="copy">
+          <span class="card-title">Essential OS concept</span>
+          <span class="card-text">cooking</span>
+        </span>
+      </article>
+      <a class="card" href="../blog/ten-widgets-in-ten-days/">
+        <span class="thumb" aria-hidden="true"></span>
+        <span class="copy">
+          <span class="card-title">10 widget 10 days</span>
+          <span class="card-text">An app with collection of home screen widgets and toys for Nothing phone 3 and 4a pro</span>
+        </span>
+      </a>
+    </section>
   </main>
+  <ul class="social">
+    <li><a href="mailto:rahul.janardhanan.here@gmail.com" aria-label="Email"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a></li>
+    <li><a href="https://instagram.com/rahul.janar.dhanan" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="0.6" fill="currentColor" stroke="none"/></svg></a></li>
+    <li><a href="https://x.com/raonehere" target="_blank" rel="noopener noreferrer" aria-label="X"><svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.22-6.82-5.97 6.82H1.67l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23Zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64Z"/></svg></a></li>
+  </ul>
 </body>
 </html>

@@ -12,99 +12,158 @@ body {
   font-family: Inter, system-ui, sans-serif;
 }
 
-body {
-  overflow-x: hidden;
-}
-
-.column {
-  width: min(720px, calc(100% - 48px));
-  margin-inline: auto;
-}
-
-.stage {
-  min-height: 100vh;
-  min-height: 100dvh;
-  display: flex;
-  align-items: center;
-  padding-block: 32px;
+.comp {
+  container-type: inline-size;
+  width: min(1210px, calc(100% - 32px));
+  margin: 48px auto 0;
 }
 
 .hero {
   position: relative;
+  width: 100%;
+  aspect-ratio: 1210.34 / 701.4;
 }
 
 .portrait {
-  position: relative;
-  z-index: 1;
-  display: block;
-  width: min(280px, 52vw);
-  height: auto;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  margin-left: auto;
-}
-
-h1 {
-  position: relative;
-  z-index: 2;
-  margin: -64px 0 0;
-  font-family: "Sue Ellen Francisco", cursive;
-  font-weight: 400;
-  font-size: clamp(52px, 9vw, 88px);
-  line-height: 0.92;
-  letter-spacing: 0;
-  color: #ffffff;
-  transform: rotate(-2deg);
-  transform-origin: left center;
-}
-
-.name {
-  position: relative;
-  display: inline-block;
-  padding-left: 0.28em;
-}
-
-.dot {
   position: absolute;
-  z-index: -1;
-  left: -0.02em;
-  top: 0.18em;
-  width: 0.62em;
-  height: 0.62em;
-  border-radius: 50%;
-  background: #e30613;
+  left: 53.43%;
+  top: 1.81%;
+  width: 46.57%;
+  height: 92.63%;
+  -webkit-mask-image: url("assets/portrait-mask.svg");
+  mask-image: url("assets/portrait-mask.svg");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-position: center;
+  mask-position: center;
 }
 
-.desc {
-  margin: 28px 0 0;
-  color: #f5c518;
+.portrait img {
+  position: absolute;
+  width: 110.89%;
+  height: 102.98%;
+  left: -5.32%;
+  top: -1.87%;
+  max-width: none;
+  object-fit: cover;
+  object-position: bottom center;
+}
+
+.wordmark {
+  position: absolute;
+  left: 0;
+  top: 56.4%;
+  width: 80.63%;
+  height: auto;
+  aspect-ratio: 975.867 / 305.699;
+  object-fit: fill;
+}
+
+.bio {
+  width: 95.19%;
+  margin: 12.8% 0 0 0.06%;
+  color: #ffd600;
   font-family: Inter, system-ui, sans-serif;
-  font-size: 16px;
   font-weight: 400;
-  line-height: 1.5;
-  overflow-wrap: anywhere;
+  font-size: calc(36.625 / 1210 * 100cqw);
+  line-height: 1.47;
 }
 
-.below {
-  padding-bottom: 48px;
+.actions {
+  display: flex;
+  gap: 6.29%;
+  width: 94.52%;
+  margin: 1.74% 0 0 0.35%;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46.85%;
+  aspect-ratio: 536 / 160;
+  background: #161616;
+  text-decoration: none;
+}
+
+.journals {
+  width: 53.64%;
+  height: auto;
+  aspect-ratio: 287.524 / 67.541;
+  object-fit: fill;
+}
+
+.photography {
+  width: 73.88%;
+  height: auto;
+  aspect-ratio: 396 / 88.498;
+  object-fit: fill;
 }
 
 .cards {
   display: grid;
-  gap: 24px;
+  gap: calc(60 / 1210 * 100cqw);
+  width: 94.52%;
+  margin: 24.7% 0 0 0.35%;
 }
 
 .card {
+  position: relative;
   display: block;
-  height: 160px;
-  background: #2a2a2a;
+  width: 100%;
+  aspect-ratio: 1144 / 524;
+  background: #161616;
+  color: inherit;
+  text-decoration: none;
+}
+
+.thumb {
+  position: absolute;
+  left: calc(35 / 1144 * 100%);
+  top: calc(35 / 1144 * 100%);
+  width: calc(454 / 1144 * 100%);
+  aspect-ratio: 1 / 1;
+  background: #000000;
+}
+
+.copy {
+  position: absolute;
+  left: calc(539 / 1144 * 100%);
+  top: 50%;
+  width: calc(533 / 1144 * 100%);
+}
+
+.card.cooking .copy {
+  top: calc(361 / 524 * 100%);
+}
+
+.card-title,
+.card-text {
+  display: block;
+}
+
+.card-title {
+  color: #ffffff;
+  font-size: calc(42 / 1210 * 100cqw);
+  font-weight: 400;
+  line-height: 1.47;
+}
+
+.card-text {
+  margin-top: 0.45em;
+  color: #898989;
+  font-size: calc(32 / 1210 * 100cqw);
+  font-weight: 400;
+  line-height: 1.47;
 }
 
 .social {
   display: flex;
   justify-content: center;
   gap: 24px;
-  margin: 48px 0 0;
+  margin: 48px 0 64px;
   padding: 0;
   list-style: none;
 }
@@ -121,24 +180,4 @@ h1 {
 .icon {
   width: 18px;
   height: 18px;
-}
-
-@media (max-width: 560px) {
-  .column {
-    width: min(720px, calc(100% - 32px));
-  }
-
-  .stage {
-    align-items: flex-start;
-    padding-top: 20px;
-  }
-
-  .portrait {
-    width: min(150px, 42vw);
-  }
-
-  h1 {
-    margin-top: -22px;
-    font-size: clamp(38px, 11vw, 48px);
-  }
 }
