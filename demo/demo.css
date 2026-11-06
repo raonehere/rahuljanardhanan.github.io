@@ -1,0 +1,144 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: #000000;
+  color: #ffffff;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.column {
+  width: min(720px, calc(100% - 48px));
+  margin-inline: auto;
+}
+
+.stage {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  padding-block: 32px;
+}
+
+.hero {
+  position: relative;
+}
+
+.portrait {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: min(280px, 52vw);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  margin-left: auto;
+}
+
+h1 {
+  position: relative;
+  z-index: 2;
+  margin: -64px 0 0;
+  font-family: "Sue Ellen Francisco", cursive;
+  font-weight: 400;
+  font-size: clamp(52px, 9vw, 88px);
+  line-height: 0.92;
+  letter-spacing: 0;
+  color: #ffffff;
+  transform: rotate(-2deg);
+  transform-origin: left center;
+}
+
+.name {
+  position: relative;
+  display: inline-block;
+  padding-left: 0.28em;
+}
+
+.dot {
+  position: absolute;
+  z-index: -1;
+  left: -0.02em;
+  top: 0.18em;
+  width: 0.62em;
+  height: 0.62em;
+  border-radius: 50%;
+  background: #e30613;
+}
+
+.desc {
+  margin: 28px 0 0;
+  color: #f5c518;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.below {
+  padding-bottom: 48px;
+}
+
+.cards {
+  display: grid;
+  gap: 24px;
+}
+
+.card {
+  display: block;
+  height: 160px;
+  background: #2a2a2a;
+}
+
+.social {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin: 48px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.social a {
+  display: inline-flex;
+  color: #9a9a9a;
+}
+
+.social a:hover {
+  color: #f5f5f5;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 560px) {
+  .column {
+    width: min(720px, calc(100% - 32px));
+  }
+
+  .stage {
+    align-items: flex-start;
+    padding-top: 20px;
+  }
+
+  .portrait {
+    width: min(150px, 42vw);
+  }
+
+  h1 {
+    margin-top: -22px;
+    font-size: clamp(38px, 11vw, 48px);
+  }
+}
