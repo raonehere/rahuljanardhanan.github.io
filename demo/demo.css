@@ -1,0 +1,211 @@
+/* Styles for the /demo/ landing preview only.
+   Production pages use the shared styles.css at the repo root. Keep this
+   file separate so the live homepage cannot change. */
+
+:root {
+  --bg: #000000;
+  --text: #f5f5f5;
+  --muted: #9a9a9a;
+  --yellow: #fdd835;
+  --red: #e53935;
+  --card: #2a2a2a;
+  --pad: 24px;
+  --measure: 720px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+  color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  overflow-x: clip;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+}
+
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  padding: 12px 16px;
+  background: var(--yellow);
+  color: #000;
+  text-decoration: none;
+  z-index: 10;
+}
+
+.skip:focus {
+  left: 16px;
+  top: 16px;
+}
+
+.demo-main {
+  width: 100%;
+  max-width: calc(var(--measure) + var(--pad) * 2);
+  margin: 0 auto;
+  padding: clamp(40px, 9vw, 88px) var(--pad) 80px;
+}
+
+/* Hero: square portrait on the right, handwritten name over its lower left. */
+
+.hero {
+  position: relative;
+}
+
+.hero-portrait {
+  display: block;
+  width: min(380px, 62%);
+  aspect-ratio: 1 / 1;
+  height: auto;
+  margin-left: auto;
+  object-fit: cover;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-title {
+  position: absolute;
+  left: 0;
+  bottom: 30%;
+  width: 100%;
+  margin: 0;
+  color: #ffffff;
+  font-family: "Sue Ellen Francisco", cursive;
+  font-weight: 400;
+  font-size: clamp(40px, calc((100vw - 48px) * 0.155), 112px);
+  line-height: 0.96;
+  letter-spacing: 0;
+  transform: rotate(-2deg);
+  transform-origin: left bottom;
+  z-index: 2;
+}
+
+.hero-greeting,
+.hero-subject {
+  display: block;
+}
+
+.hero-greeting {
+  font-size: 0.62em;
+  line-height: 0.9;
+  margin-bottom: -0.06em;
+}
+
+.hero-name {
+  position: relative;
+  display: inline-block;
+  z-index: 0;
+}
+
+.hero-name::before {
+  content: "";
+  position: absolute;
+  left: -0.16em;
+  top: 0.04em;
+  width: 0.7em;
+  height: 0.7em;
+  border-radius: 50%;
+  background: var(--red);
+  z-index: -1;
+}
+
+/* Yellow description */
+
+.demo-intro {
+  margin: 72px 0 0;
+  color: var(--yellow);
+  font-size: clamp(16px, 1.25vw, 18px);
+  line-height: 1.65;
+  letter-spacing: 0.01em;
+  max-width: 100%;
+}
+
+/* Three empty cards standing in for future blog posts. */
+
+.demo-articles {
+  display: grid;
+  gap: 28px;
+  margin-top: 72px;
+}
+
+.demo-card {
+  width: 100%;
+  aspect-ratio: 12 / 5;
+  background: var(--card);
+}
+
+.demo-social {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 28px;
+  margin: 64px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.demo-social a {
+  display: inline-flex;
+  padding: 4px;
+  color: var(--muted);
+  transition: color 0.2s ease;
+}
+
+.demo-social a:hover,
+.demo-social a:focus-visible {
+  color: var(--text);
+}
+
+.demo-social .icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+a:focus-visible,
+.skip:focus-visible {
+  outline: 2px solid var(--yellow);
+  outline-offset: 3px;
+}
+
+@media (max-width: 560px) {
+  .demo-main {
+    padding-inline: 20px;
+    padding-bottom: 64px;
+  }
+
+  .demo-intro {
+    margin-top: 48px;
+  }
+
+  .demo-articles {
+    margin-top: 48px;
+    gap: 20px;
+  }
+
+  .demo-social {
+    margin-top: 48px;
+    gap: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .demo-social a {
+    transition: none;
+  }
+}

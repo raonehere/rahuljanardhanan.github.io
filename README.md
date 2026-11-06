@@ -12,6 +12,21 @@ python3 tools/build_pages.py
 
 The intro line is based on the portfolio wording Design, Animation, Video, and Photo.
 
+## Landing preview at /demo/
+
+`/demo/` is an isolated design draft of a new landing page. It is not the homepage and is marked `noindex`.
+
+- Copy: `content/landing-demo.md`
+- Styles: `demo/demo.css` (separate from the shared `styles.css`)
+- Portrait: `demo/rahul-portrait.jpg`
+- Output: `demo/index.html`
+
+```bash
+python3 tools/build_demo.py
+```
+
+The demo has its own builder and stylesheet, so the other build scripts and the Notion sync never touch it. To promote it, edit `tools/build_pages.py` and `styles.css` instead of copying these files over.
+
 ## Add or reorder photography
 
 The photography page is built from `content/photography.json`. The order of the `photos` list is the order on the page. Each photo has an image path, alt text, caption, and optional link.
