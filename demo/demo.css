@@ -14,8 +14,15 @@ body {
 
 .comp {
   container-type: inline-size;
-  width: min(1210px, calc(100% - 32px));
-  margin: 48px auto 0;
+  /* Half of the 1210px frame. Phones stay full width below this cap. */
+  width: min(605px, calc(100% - 32px));
+  margin: 88px auto 0;
+}
+
+@media (max-width: 720px) {
+  .comp {
+    margin-top: 48px;
+  }
 }
 
 .hero {
@@ -75,7 +82,7 @@ body {
   display: flex;
   gap: 6.29%;
   width: 94.52%;
-  margin: 1.74% 0 0 0.35%;
+  margin: 40px 0 0 0.35%;
 }
 
 .action {
@@ -106,7 +113,7 @@ body {
   display: grid;
   gap: calc(60 / 1210 * 100cqw);
   width: 94.52%;
-  margin: 24.7% 0 0 0.35%;
+  margin: 28px 0 0 0.35%;
 }
 
 .card {
