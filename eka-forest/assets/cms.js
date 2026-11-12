@@ -7,7 +7,7 @@
   // data-cms prefix -> sheet tab title (friendly tab names in the sheet)
   var TABS = { about: 'About', stays: 'Stays', gallery: 'Gallery', reach: 'Getting here',
                faq: 'FAQ', contact: 'Contact', footer: 'Footer',
-               events: 'Events', blog: 'Blog' };
+               events: 'Events', blog: 'Journals' };
   var ALLOWED = { BR: 1, STRONG: 1, EM: 1, A: 1 };
 
   function url(tab) {
